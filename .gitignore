@@ -4,3 +4,6 @@ node_modules/
 # Built Files
 output/
 dist/
+
+# OS Files
+.DS_Store

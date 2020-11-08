@@ -1,0 +1,142 @@
+:: Entrance {"position":"25,125","size":"100,100"}
+You stand at the bottom of a ladder into a dark cellar.
+
+The air smells stale and dusty like it hasen't been moved in years.
+
+(if: $door_locked is true)[\
+  There is a [door]<door| with a small, iron lock.
+  (click: ?door)[(display: "door")]
+]\
+(else:)[There is an unlocked [[door->Storeroom]].]
+(if: $inv contains "heartstone")[[[Escape->Escape]] with the Heartstone!]
+
+
+:: door [noInvLink noInvDisplay] {"position":"25,250","size":"100,100"}
+(if: $door_locked is true)[\
+  (if: $inv contains "rusty key")[\
+	You unlock the [[door->Storeroom]] with the Rusty Key.
+	(set: $inv to $inv - (a: "rusty key"))
+	(set: $door_locked to false)
+  ]\
+  (else:)[The door is locked and requires a key]
+]
+
+
+:: Storeroom {"position":"150,125","size":"100,100"}
+You stand in a musky Storeroom. The walls are lined with casks and barrels filled with long forgotten wine.
+
+(if: $storeroom_hammer is true)[There is a hammer resting on the table.]<hammer|
+(click-replace: ?hammer)[You take the hammer.\
+  <script>pushEvent('Story', 'Hammer', 'Take')</script>\
+  (set: $inv to $inv + (a: "hammer"))\
+  (set: $storeroom_hammer to false)\
+]
+
+(if: $wall_intact is true)[Some of the (link-repeat: "bricks")[\
+  (if: $inv contains "hammer")[\
+    (replace: ?wallresult)[*Slam* Bricks fly and crumble under your hammer, revealing a [[dark passage->Tunnel1-dark]].]\
+    (set: $wall_intact to false)\
+  ]\
+  (else:)[\
+    (replace: ?wallresult)[The brick wall sounds hollow, but you cannot budge it with your bare hands.]\
+  ]\
+] in the wall look loose.]\
+(else:)[The broken wall reveals a [[dark passage->Tunnel1]]]\
+
+|wallresult)[]
+
+There is a [[door->Entrance]] back to the entrance.
+
+
+:: Tunnel1-dark
+(set: $thud_lvl to 1)
+(if: $lantern_lit is true)[(goto: "Tunnel1")]
+You crouch in a dark tunnel, unable to see your hand infront of your face.
+
+(display: "CurrentSoundMsg")
+
+(if: $inv contains "lantern")[\
+  Light your [lantern]<lantern|.
+  (click: ?lantern)[\
+    (set: $lantern_lit to true)\
+    (goto: "Tunnel1")
+  ]
+]
+[[Turn back->Storeroom]]
+
+
+:: Tunnel1
+(set: $thud_lvl to 1)
+You lantern burns brightly.
+
+The rock walls appears smooth, as if dug by flowing water pressure. The tunnel makes a turn upahead out of sight.
+
+(display: "CurrentSoundMsg")
+
+[[Follow it.->Tunnel2]]
+(if: $heartstone is true)[[[Turn back->Storeroom]]]\
+(else:)[[[Escape->Storeroom]]]
+
+
+:: Tunnel2
+(set: $thud_lvl to 2)
+It takes some time to crawl through the narrow tunnel, but you make steady progress. Your lantern sputters but remains strong.
+
+(display: "CurrentSoundMsg")
+
+[[Continue.->Tunnel3]]
+(if: $heartstone is true)[[[Turn back->Tunnel1]]]\
+(else:)[[[Escape->Tunnel1]]]
+
+:: Tunnel3
+(set: $thud_lvl to 3)
+At last the tunnel widens enough for you to nearly stand. You come upon a stone ediface with a worn wooden door with a dull red light leaking under it.
+
+(click: "wooden door")[On closer inspection the door has many thin spindle patterns inlayed in the wood. It once had a \
+laquor finish and a golden handle, but has since decayed from misuse]
+
+(display: "CurrentSoundMsg")
+
+[[Open the door.->Heartroom]]
+(if: $heartstone is true)[[[Turn back->Tunnel2]]]\
+(else:)[[[Escape->Tunnel2]]]
+
+:: Heartroom
+(set: $thud_lvl to 4)
+Behind the door is a small antechamber with rough hewen stone covering the walls and floor. In each corner is a \
+sconce with a luminous crystal casting red light across the floor.
+
+(if: $heartstone is true)[\
+  In the center is a stone pedestal with a fist-sized blood red gem. Its sparkles seem to shift and \
+  reverberate with the sound.
+
+  (display: "CurrentSoundMsg")
+
+  Take the Heartstone\
+]<heartstone|\
+(else:)[\
+  (display: "CurrentSoundMsg")
+]
+[[Flee->Tunnel3]]\
+
+(click: "Take the Heartstone")[\
+  <script>pushEvent('Story', 'Heartstone', 'Take')</script>\
+  (set: $inv to $inv + (a: "heartstone"))\
+  (set: $heartstone to false)\
+  (replace: ?heartstone)[\
+    ---
+    The gem feels heavy, and warm in your hand. It seems to jostle and shake on its own accord.
+
+    Suddenly, the pulse quickens. slamming your mind with incessant pressure. You must leave!
+
+    (display: "CurrentSoundMsg")
+  ]\
+]
+
+:: Escape [noInvDisplay noInvLink]
+<script>pushEvent('Story', 'Finish', 'Escape')</script>\
+You climb out into the night air and run swiftly from the rickety house, still swaying in the wind like a dying animal.
+
+Clutch the Heartstone tightly to your chest. You feel its warmth, and try to forget the Dark Cellar you've left behind.
+
+You Win!

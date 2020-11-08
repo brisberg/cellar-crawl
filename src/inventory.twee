@@ -1,0 +1,26 @@
+:: Inventory [noInvLink noInvDisplay] {"position":"400,0","size":"100,100"}
+(if: $inv's length > 0)[You are carrying (print: $inv.join(", "))]
+(else:)[You are carrying nothing.]
+
+(click: "lantern")[(display: "lantern-item")]
+(click: "rusty key")[(display: "rusty-key-item")]
+(click: "hammer")[(display: "hammer-item")]
+(click: "heartstone")[(display: "heartstone-item")]
+
+(link-goto: "Return", (history:)'s last)
+
+
+:: lantern-item [item] {"position":"600,0","size":"100,100"}
+A copper, hooded lantern with a small oil burner which easily illuminates a room. It appears to have plenty of oil.
+
+
+:: rusty-key-item [item] {"position":"700,0","size":"100,100"}
+An old, rusted iron key.
+
+
+:: hammer-item [item] {"position":"800,0","size":"100,100"}
+A solid iron sledge hammer.
+
+
+:: heartstone-item [item] {"position":"900,0","size":"100,100"}
+A fist-sized red gem with a low luminescence in its core. The stone is warm to the touch and pulses and jitters in your hand.

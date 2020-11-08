@@ -1,0 +1,52 @@
+:: StoryTitle
+Cellar Crawl
+
+:: StoryData
+{
+	"ifid": "F546AE48-0F22-44DB-8A69-D78C7F6897D5",
+	"format": "Harlowe",
+	"format-version": "3.1.0",
+	"start": "Entrance",
+	"zoom": 1
+}
+
+:: Starup [startup] {"position":"25,0","size":"100,100"}
+<!-- Set up Initial Variables -->\
+<script>pushEvent('Story', 'Start', '');</script>\
+(set: $inv to (a: "lantern", "rusty key"))\
+(set: $door_locked to true)\
+(set: $storeroom_hammer to true)\
+(set: $wall_intact to true)\
+(set: $heartstone to true)\
+(set: $lantern_lit to false)\
+(set: $thud_lvl to 0)\
+\
+(set: $sound_msgs to (a:
+	"",
+	"You feel slight tremors in the rock beneath your feet.",
+	"There is a faint, but deep throbbing sound coming from up ahead.",
+	"The throbbing sound comes from the rock all around you, permeating your thoughts.",
+	"*Bu-dum* *Bu-dum*. The walls themselves scream at you with a deafening cacophony.",
+))\
+(set: $panic_msgs to (a:
+	"",
+	"The low thudding is faint now.",
+	"The beating sound is more distant now. You still feel it in your feet, but can hear your thoughts again.",
+	"Paniced thudding echoes and shakes the tunnel behind you.",
+	"*Bu-dum-dum* *Bu-dum-dum*. The rising thrumming shakes the walls, which shower you in gravel in protest.",
+))
+
+
+:: Footer [footer] {"position":"125,0","size":"100,100"}
+<!-- Print the Inventory -->
+(if: $inv's length > 0)[
+  (if: (passage:)'s tags contains "noInvDisplay")[]\
+  (else:)[You are carrying (print: $inv.join(", "))]
+  (if: (passage:)'s tags contains "noInvLink")[]\
+  (else:)[Check [[inventory->Inventory]]]
+]
+
+:: CurrentSoundMsg
+<!-- Print current sound level message -->\
+(if: $heartstone is true)[(print: $sound_msgs[$thud_lvl])]\
+(else:)[(print: $panic_msgs[$thud_lvl])]

@@ -1,0 +1,17 @@
+{
+  "name": "cellar-crawl",
+  "version": "1.0.0",
+  "description": "A simple adventure game exploring the dark cellar under an abandoned house. Navigate various rooms and puzzles to find the heart of the cellar.",
+  "main": "index.js",
+  "scripts": {
+    "build": "yarn run @brisberg/twine-builder",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.5"
+  }
+}

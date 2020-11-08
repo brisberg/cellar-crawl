@@ -1,7 +1,7 @@
 id: "cellar-crawl"
 version: "1.0.0"
 title: "Cellar Crawl"
-format: "sugarcube-2.31.1"
+format: "harlowe-3.1.0"
 description: "Explore the dark cellar beneith a creepy house to discover its secret."
 header:
   - "header/analytics.html"

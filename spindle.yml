@@ -4,6 +4,6 @@ title: "Dark Cellar"
 format: "harlowe-3.1.0"
 description: "A simple adventure game exploring the dark cellar under an abandoned house. Navigate various rooms and puzzles to find the heart of the cellar."
 header:
-  - "header"
+  - "header/*"
 deps:
-  - "src"
+  - "src/*"

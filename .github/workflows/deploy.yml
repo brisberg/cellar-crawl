@@ -56,4 +56,3 @@ jobs:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           repository: brisberg/twine.brisberg.dev
           event-type: update-all-games
-          # client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'

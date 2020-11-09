@@ -1,6 +1,6 @@
 {
     "template": "https://github.com/brisberg/cruft-spindle-project",
-    "commit": "146cf5e44412086a5a2c33b6b5d5940a06ccc527",
+    "commit": "73b28aa5d6ed43b5259803dfc3cc6a0a0df8bd21",
     "context": {
         "cookiecutter": {
             "full_name": "Brandon Risberg",

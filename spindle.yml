@@ -1,9 +1,9 @@
 id: "cellar-crawl"
-version: "1.0.0"
-title: "Cellar Crawl"
+version: "0.1.0"
+title: "Dark Cellar"
 format: "harlowe-3.1.0"
-description: "Explore the dark cellar beneith a creepy house to discover its secret."
+description: "A simple adventure game exploring the dark cellar under an abandoned house. Navigate various rooms and puzzles to find the heart of the cellar."
 header:
-  - "header/analytics.html"
+  - "header"
 deps:
   - "src"

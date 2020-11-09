@@ -1,14 +1,13 @@
 {
   "name": "cellar-crawl",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "A simple adventure game exploring the dark cellar under an abandoned house. Navigate various rooms and puzzles to find the heart of the cellar.",
-  "main": "index.js",
   "scripts": {
     "build": "yarn run spindle",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Brandon Risberg",
+  "license": "MIT",
   "devDependencies": {
     "@brisberg/spindle": "^0.2.1"
   }

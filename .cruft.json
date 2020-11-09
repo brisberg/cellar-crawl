@@ -1,0 +1,16 @@
+{
+    "template": "https://github.com/brisberg/cruft-spindle-project",
+    "commit": "fab41e84732cbaa3641d5252024dd78ab4b55613",
+    "context": {
+        "cookiecutter": {
+            "full_name": "Brandon Risberg",
+            "email": "brandon.risberg@gmail.com",
+            "github_username": "brisberg",
+            "title": "Dark Cellar",
+            "repo_slug": "cellar-crawl",
+            "description": "A simple adventure game exploring the dark cellar under an abandoned house. Navigate various rooms and puzzles to find the heart of the cellar.",
+            "_template": "https://github.com/brisberg/cruft-spindle-project"
+        }
+    },
+    "directory": null
+}

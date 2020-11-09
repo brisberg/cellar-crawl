@@ -41,6 +41,7 @@ jobs:
           mv output/cellar-crawl.html dist/index.html
 
       - name: Deploy
+        id: deploy
         uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -50,6 +51,7 @@ jobs:
       # Inform twine.brisberg.dev to pull the latest deployed version
       - name: Inform twine.brisberg.dev
         uses: peter-evans/repository-dispatch@v1
+        if: steps.deploy.outputs.DEPLOYMENT_STATUS == 'success'
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           repository: brisberg/twine.brisberg.dev

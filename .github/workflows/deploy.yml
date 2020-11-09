@@ -8,7 +8,7 @@ on:
 
 jobs:
   deploy-gh-pages:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         # Specify all desired node versions
@@ -49,3 +49,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages  # The branch the action should deploy to.
           FOLDER: dist      # The folder the action should deploy.
+
+      # Inform twine.brisberg.dev to pull the latest deployed version
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          repository: brisberg/twine.brisberg.dev
+          event-type: update-all-games
+          # client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'

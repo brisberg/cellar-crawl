@@ -48,7 +48,7 @@ jobs:
           FOLDER: dist      # The folder the action should deploy.
 
       # Inform twine.brisberg.dev to pull the latest deployed version
-      - name: Repository Dispatch
+      - name: Inform twine.brisberg.dev
         uses: peter-evans/repository-dispatch@v1
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}

@@ -51,7 +51,7 @@ jobs:
       # Inform twine.brisberg.dev to pull the latest deployed version
       - name: Inform twine.brisberg.dev
         uses: peter-evans/repository-dispatch@v1
-        if: steps.deploy.outputs.DEPLOYMENT_STATUS == 'success'
+        if: env.DEPLOYMENT_STATUS == 'success'
         with:
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
           repository: brisberg/twine.brisberg.dev

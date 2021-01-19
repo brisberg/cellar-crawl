@@ -1,0 +1,8 @@
+:: Footer [footer] {"position":"125,0","size":"100,100"}
+<!-- Print the Inventory -->
+(if: $inv's length > 0)[
+  (if: (passage:)'s tags contains "noInvDisplay")[]\
+  (else:)[You are carrying (print: $inv.join(", "))]
+  (if: (passage:)'s tags contains "noInvLink")[]\
+  (else:)[Check [[inventory->Inventory]]]
+]

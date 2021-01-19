@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@brisberg/spindle@^0.2.1":
-  version "0.2.1"
-  resolved "https://registry.npmjs.org/@brisberg/spindle/-/spindle-0.2.1.tgz#81d459bf2df457fc19a023c9a081880fce99606c"
-  integrity sha512-XyC71NWjnUdvXJ7ZGdtDt/bymBAl5eGI22NaIAdHVuLQq9AQd0iNFUQv6e4AhOlmvgm7IE5QEGhLxZ+DrXk73Q==
+"@brisberg/spindle@^0.2.2":
+  version "0.2.2"
+  resolved "https://registry.npmjs.org/@brisberg/spindle/-/spindle-0.2.2.tgz#ad8c9c1be12ddfb7005d8ba6595eb4d2b4a6cb7b"
+  integrity sha512-v8J3SfN4XNM3WNj7bdEO0SV78mEa/qOKfLuaABM9xxYCa8YtPJTxM13+mUyZqYnT/HZWk82vosrdSklbjswxGA==
   dependencies:
     "@types/gulp" "^4.0.7"
     "@types/gulp-concat" "^0.0.32"
@@ -23,6 +23,7 @@
     gulp-if "^3.0.0"
     js-yaml "^3.14.0"
     minimist "^1.2.5"
+    tslib "^2.0.3"
 
 "@types/expect@^1.20.4":
   version "1.20.4"
@@ -2555,6 +2556,11 @@ to-through@^2.0.0:
   integrity sha1-/JKtq6ByZHvAtn1rA2ZKoZUJOvY=
   dependencies:
     through2 "^2.0.3"
+
+tslib@^2.0.3:
+  version "2.1.0"
+  resolved "https://registry.npmjs.org/tslib/-/tslib-2.1.0.tgz#da60860f1c2ecaa5703ab7d39bc05b6bf988b97a"
+  integrity sha512-hcVC3wYEziELGGmEEXue7D75zbwIIVUMWAVbHItGPx0ziyXxrOMQx4rQEVEV45Ut/1IotuEvwqPopzIOkDMf0A==
 
 type@^1.0.1:
   version "1.2.0"

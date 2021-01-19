@@ -1,0 +1,4 @@
+:: CurrentSoundMsg
+<!-- Print current sound level message -->\
+(if: $heartstone is true)[(print: $sound_msgs[$thud_lvl])]\
+(else:)[(print: $panic_msgs[$thud_lvl])]

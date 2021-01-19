@@ -1,0 +1,20 @@
+:: StoryTitle
+Dark Cellar
+
+:: StorySubtitle
+
+:: StoryAuthor
+Brandon Risberg
+
+:: StoryBanner
+
+:: StoryCaption
+
+:: StoryData
+{
+	"ifid": "F546AE48-0F22-44DB-8A69-D78C7F6897D5",
+	"format": "Harlowe",
+	"format-version": "3.1.0",
+	"start": "Entrance",
+	"zoom": 1
+}

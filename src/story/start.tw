@@ -1,4 +1,4 @@
-:: Starup [startup] {"position":"25,0","size":"100,100"}
+:: Startup [startup] {"position":"25,0","size":"100,100"}
 <!-- Set up Initial Variables -->\
 <script>pushEvent('Story', 'Start', '');</script>\
 (set: $inv to (a: "lantern", "rusty key"))\
@@ -20,6 +20,6 @@
 	"",
 	"The low thudding is faint now.",
 	"The beating sound is more distant now. You still feel it in your feet, but can hear your thoughts again.",
-	"Paniced thudding echoes and shakes the tunnel behind you.",
+	"Panicked thudding echoes and shakes the tunnel behind you.",
 	"*Bu-dum-dum* *Bu-dum-dum*. The rising thrumming shakes the walls, which shower you in gravel in protest.",
 ))

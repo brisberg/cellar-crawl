@@ -1,7 +1,7 @@
 :: Entrance {"position":"25,125","size":"100,100"}
 You stand at the bottom of a ladder into a dark cellar.
 
-The air smells stale and dusty like it hasen't been moved in years.
+The air smells stale and dusty like it hasn't been moved in years.
 
 (if: $door_locked is true)[\
   There is a [door]<door| with a small, iron lock.
@@ -51,7 +51,7 @@ There is a [[door->Entrance]] back to the entrance.
 :: Tunnel1-dark
 (set: $thud_lvl to 1)
 (if: $lantern_lit is true)[(goto: "Tunnel1")]
-You crouch in a dark tunnel, unable to see your hand infront of your face.
+You crouch in a dark tunnel, unable to see your hand in front of your face.
 
 (display: "CurrentSoundMsg")
 
@@ -69,7 +69,7 @@ You crouch in a dark tunnel, unable to see your hand infront of your face.
 (set: $thud_lvl to 1)
 You lantern burns brightly.
 
-The rock walls appears smooth, as if dug by flowing water pressure. The tunnel makes a turn upahead out of sight.
+The rock walls appears smooth, as if dug by flowing water pressure. The tunnel makes a turn up ahead out of sight.
 
 (display: "CurrentSoundMsg")
 
@@ -90,10 +90,10 @@ It takes some time to crawl through the narrow tunnel, but you make steady progr
 
 :: Tunnel3
 (set: $thud_lvl to 3)
-At last the tunnel widens enough for you to nearly stand. You come upon a stone ediface with a worn wooden door with a dull red light leaking under it.
+At last the tunnel widens enough for you to nearly stand. You come upon a stone edifice with a worn wooden door with a dull red light leaking under it.
 
-(click: "wooden door")[On closer inspection the door has many thin spindle patterns inlayed in the wood. It once had a \
-laquor finish and a golden handle, but has since decayed from misuse]
+(click: "wooden door")[On closer inspection the door has many thin spindle patterns inlaid in the wood. It once had a \
+lacquer finish and a golden handle, but has since decayed from misuse]
 
 (display: "CurrentSoundMsg")
 
@@ -103,7 +103,7 @@ laquor finish and a golden handle, but has since decayed from misuse]
 
 :: Heartroom
 (set: $thud_lvl to 4)
-Behind the door is a small antechamber with rough hewen stone covering the walls and floor. In each corner is a \
+Behind the door is a small antechamber with rough hewn stone covering the walls and floor. In each corner is a \
 sconce with a luminous crystal casting red light across the floor.
 
 (if: $heartstone is true)[\

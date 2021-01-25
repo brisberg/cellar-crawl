@@ -53,7 +53,7 @@
 
 (link-goto: &quot;Return&quot;, (history:)&#39;s last)</tw-passagedata><tw-passagedata pid="3" name="lantern-item" tags="item" position="600,0" size="100,100">A copper, hooded lantern with a small oil burner which easily illuminates a room. It appears to have plenty of oil.</tw-passagedata><tw-passagedata pid="4" name="rusty-key-item" tags="item" position="700,0" size="100,100">An old, rusted iron key.</tw-passagedata><tw-passagedata pid="5" name="hammer-item" tags="item" position="800,0" size="100,100">A solid iron sledge hammer.</tw-passagedata><tw-passagedata pid="6" name="heartstone-item" tags="item" position="900,0" size="100,100">A fist-sized red gem with a low luminescence in its core. The stone is warm to the touch and pulses and jitters in your hand.</tw-passagedata><tw-passagedata pid="7" name="CurrentSoundMsg" tags="" position="850,100" size="100,100">&lt;!-- Print current sound level message --&gt;\
 (if: $heartstone is true)[(print: $sound_msgs[$thud_lvl])]\
-(else:)[(print: $panic_msgs[$thud_lvl])]</tw-passagedata><tw-passagedata pid="8" name="Starup" tags="startup" position="25,0" size="100,100">&lt;!-- Set up Initial Variables --&gt;\
+(else:)[(print: $panic_msgs[$thud_lvl])]</tw-passagedata><tw-passagedata pid="8" name="Startup" tags="startup" position="25,0" size="100,100">&lt;!-- Set up Initial Variables --&gt;\
 &lt;script&gt;pushEvent(&#39;Story&#39;, &#39;Start&#39;, &#39;&#39;);&lt;/script&gt;\
 (set: $inv to (a: &quot;lantern&quot;, &quot;rusty key&quot;))\
 (set: $door_locked to true)\
@@ -74,11 +74,11 @@
 	&quot;&quot;,
 	&quot;The low thudding is faint now.&quot;,
 	&quot;The beating sound is more distant now. You still feel it in your feet, but can hear your thoughts again.&quot;,
-	&quot;Paniced thudding echoes and shakes the tunnel behind you.&quot;,
+	&quot;Panicked thudding echoes and shakes the tunnel behind you.&quot;,
 	&quot;*Bu-dum-dum* *Bu-dum-dum*. The rising thrumming shakes the walls, which shower you in gravel in protest.&quot;,
 ))</tw-passagedata><tw-passagedata pid="9" name="Entrance" tags="" position="25,125" size="100,100">You stand at the bottom of a ladder into a dark cellar.
 
-The air smells stale and dusty like it hasen&#39;t been moved in years.
+The air smells stale and dusty like it hasn&#39;t been moved in years.
 
 (if: $door_locked is true)[\
   There is a [door]&lt;door| with a small, iron lock.
@@ -116,7 +116,7 @@ The air smells stale and dusty like it hasen&#39;t been moved in years.
 
 There is a [[door-&gt;Entrance]] back to the entrance.</tw-passagedata><tw-passagedata pid="12" name="Tunnel1-dark" tags="" position="225,225" size="100,100">(set: $thud_lvl to 1)
 (if: $lantern_lit is true)[(goto: &quot;Tunnel1&quot;)]
-You crouch in a dark tunnel, unable to see your hand infront of your face.
+You crouch in a dark tunnel, unable to see your hand in front of your face.
 
 (display: &quot;CurrentSoundMsg&quot;)
 
@@ -130,7 +130,7 @@ You crouch in a dark tunnel, unable to see your hand infront of your face.
 [[Turn back-&gt;Storeroom]]</tw-passagedata><tw-passagedata pid="13" name="Tunnel1" tags="" position="350,225" size="100,100">(set: $thud_lvl to 1)
 You lantern burns brightly.
 
-The rock walls appears smooth, as if dug by flowing water pressure. The tunnel makes a turn upahead out of sight.
+The rock walls appears smooth, as if dug by flowing water pressure. The tunnel makes a turn up ahead out of sight.
 
 (display: &quot;CurrentSoundMsg&quot;)
 
@@ -144,17 +144,17 @@ It takes some time to crawl through the narrow tunnel, but you make steady progr
 [[Continue.-&gt;Tunnel3]]
 (if: $heartstone is true)[[[Turn back-&gt;Tunnel1]]]\
 (else:)[[[Escape-&gt;Tunnel1]]]</tw-passagedata><tw-passagedata pid="15" name="Tunnel3" tags="" position="600,225" size="100,100">(set: $thud_lvl to 3)
-At last the tunnel widens enough for you to nearly stand. You come upon a stone ediface with a worn wooden door with a dull red light leaking under it.
+At last the tunnel widens enough for you to nearly stand. You come upon a stone edifice with a worn wooden door with a dull red light leaking under it.
 
-(click: &quot;wooden door&quot;)[On closer inspection the door has many thin spindle patterns inlayed in the wood. It once had a \
-laquor finish and a golden handle, but has since decayed from misuse]
+(click: &quot;wooden door&quot;)[On closer inspection the door has many thin spindle patterns inlaid in the wood. It once had a \
+lacquer finish and a golden handle, but has since decayed from misuse]
 
 (display: &quot;CurrentSoundMsg&quot;)
 
 [[Open the door.-&gt;Heartroom]]
 (if: $heartstone is true)[[[Turn back-&gt;Tunnel2]]]\
 (else:)[[[Escape-&gt;Tunnel2]]]</tw-passagedata><tw-passagedata pid="16" name="Heartroom" tags="" position="725,225" size="100,100">(set: $thud_lvl to 4)
-Behind the door is a small antechamber with rough hewen stone covering the walls and floor. In each corner is a \
+Behind the door is a small antechamber with rough hewn stone covering the walls and floor. In each corner is a \
 sconce with a luminous crystal casting red light across the floor.
 
 (if: $heartstone is true)[\

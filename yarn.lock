@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@brisberg/spindle@^0.2.2":
-  version "0.2.2"
-  resolved "https://registry.npmjs.org/@brisberg/spindle/-/spindle-0.2.2.tgz#ad8c9c1be12ddfb7005d8ba6595eb4d2b4a6cb7b"
-  integrity sha512-v8J3SfN4XNM3WNj7bdEO0SV78mEa/qOKfLuaABM9xxYCa8YtPJTxM13+mUyZqYnT/HZWk82vosrdSklbjswxGA==
+"@brisberg/spindle@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@brisberg/spindle/-/spindle-0.3.0.tgz#c3a63c1f55d7d54f587c2e18253a8bfae444dbee"
+  integrity sha512-Jw1MKfFhhI1GUirtS5Cjs7tfariNG2iymkfbSJh+CQZUE6j0zrW0oabc5isbSj5CA6J+SX3ivXzeAhuXYn32DA==
   dependencies:
     "@types/gulp" "^4.0.7"
     "@types/gulp-concat" "^0.0.32"

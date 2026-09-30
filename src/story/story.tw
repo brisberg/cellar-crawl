@@ -1,7 +1,7 @@
 :: Entrance {"position":"25,125","size":"100,100"}
 You stand at the bottom of a ladder into a dark cellar.
 
-The air smells stale and dusty like it hasn't been moved in years.
+The air smells stale and dusty, as if it hasn't been moved in years.
 
 (if: $door_locked is true)[\
   There is a [door]<door| with a small, iron lock.
@@ -18,12 +18,12 @@ The air smells stale and dusty like it hasn't been moved in years.
 	(set: $inv to $inv - (a: "rusty key"))
 	(set: $door_locked to false)
   ]\
-  (else:)[The door is locked and requires a key]
+  (else:)[The door is locked and requires a key.]
 ]
 
 
 :: Storeroom {"position":"150,125","size":"100,100"}
-You stand in a musky Storeroom. The walls are lined with casks and barrels filled with long forgotten wine.
+You stand in a musky Storeroom. The walls are lined with casks and barrels filled with long-forgotten wine.
 
 (if: $storeroom_hammer is true)[There is a hammer resting on the table.]<hammer|
 (click-replace: ?hammer)[You take the hammer.\
@@ -41,7 +41,7 @@ You stand in a musky Storeroom. The walls are lined with casks and barrels fille
     (replace: ?wallresult)[The brick wall sounds hollow, but you cannot budge it with your bare hands.]\
   ]\
 ] in the wall look loose.]\
-(else:)[The broken wall reveals a [[dark passage->Tunnel1]]]\
+(else:)[The broken wall reveals a [[dark passage->Tunnel1]].]\
 
 |wallresult)[]
 
@@ -67,9 +67,9 @@ You crouch in a dark tunnel, unable to see your hand in front of your face.
 
 :: Tunnel1
 (set: $thud_lvl to 1)
-You lantern burns brightly.
+Your lantern burns brightly.
 
-The rock walls appears smooth, as if dug by flowing water pressure. The tunnel makes a turn up ahead out of sight.
+The rock walls appear smooth, as if dug by flowing water pressure. The tunnel makes a turn up ahead out of sight.
 
 (display: "CurrentSoundMsg")
 
@@ -93,7 +93,7 @@ It takes some time to crawl through the narrow tunnel, but you make steady progr
 At last the tunnel widens enough for you to nearly stand. You come upon a stone edifice with a worn wooden door with a dull red light leaking under it.
 
 (click: "wooden door")[On closer inspection the door has many thin spindle patterns inlaid in the wood. It once had a \
-lacquer finish and a golden handle, but has since decayed from misuse]
+lacquer finish and a golden handle, but has since decayed from misuse.]
 
 (display: "CurrentSoundMsg")
 
@@ -103,11 +103,11 @@ lacquer finish and a golden handle, but has since decayed from misuse]
 
 :: Heartroom
 (set: $thud_lvl to 4)
-Behind the door is a small antechamber with rough hewn stone covering the walls and floor. In each corner is a \
+Behind the door is a small antechamber with rough-hewn stone covering the walls and floor. In each corner is a \
 sconce with a luminous crystal casting red light across the floor.
 
 (if: $heartstone is true)[\
-  In the center is a stone pedestal with a fist-sized blood red gem. Its sparkles seem to shift and \
+  In the center is a stone pedestal with a fist-sized blood red gem. Its facets seem to shift and \
   reverberate with the sound.
 
   (display: "CurrentSoundMsg")
@@ -125,9 +125,9 @@ sconce with a luminous crystal casting red light across the floor.
   (set: $heartstone to false)\
   (replace: ?heartstone)[\
     ---
-    The gem feels heavy, and warm in your hand. It seems to jostle and shake on its own accord.
+    The gem feels heavy, and warm in your hand. It seems to jostle and shake of its own accord.
 
-    Suddenly, the pulse quickens. slamming your mind with incessant pressure. You must leave!
+    Suddenly, the pulse quickens, slamming your mind with incessant pressure. You must leave!
 
     (display: "CurrentSoundMsg")
   ]\
@@ -137,6 +137,6 @@ sconce with a luminous crystal casting red light across the floor.
 <script>pushEvent('Story', 'Finish', 'Escape')</script>\
 You climb out into the night air and run swiftly from the rickety house, still swaying in the wind like a dying animal.
 
-Clutch the Heartstone tightly to your chest. You feel its warmth, and try to forget the Dark Cellar you've left behind.
+You clutch the Heartstone tightly to your chest. You feel its warmth, and try to forget the Dark Cellar you've left behind.
 
 You Win!

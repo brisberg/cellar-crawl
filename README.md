@@ -3,7 +3,7 @@
 A simple adventure game exploring the dark cellar under an abandoned house. Navigate various rooms and puzzles to find the heart of the cellar.
 
 Twine 2.3.7\
-Harlowe 3.1.0
+Harlowe 3.3.9
 
 ### Features
 

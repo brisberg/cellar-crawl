@@ -2,7 +2,7 @@
 <!-- Print the Inventory -->
 (if: $inv's length > 0)[
   (if: (passage:)'s tags contains "noInvDisplay")[]\
-  (else:)[You are carrying (print: $inv.join(", "))]
+  (else:)[You are carrying (print: (joined: ", ", ...$inv))]
   (if: (passage:)'s tags contains "noInvLink")[]\
   (else:)[Check [[inventory->Inventory]]]
 ]

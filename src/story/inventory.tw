@@ -1,5 +1,5 @@
 :: Inventory [noInvLink noInvDisplay] {"position":"400,0","size":"100,100"}
-(if: $inv's length > 0)[You are carrying (print: $inv.join(", "))]
+(if: $inv's length > 0)[You are carrying (print: (joined: ", ", ...$inv))]
 (else:)[You are carrying nothing.]
 
 (click: "lantern")[(display: "lantern-item")]

@@ -7,7 +7,7 @@
 (set: $wall_intact to true)\
 (set: $heartstone to true)\
 (set: $lantern_lit to false)\
-(set: $thud_lvl to 0)\
+(set: $thud_lvl to 1)\
 \
 (set: $sound_msgs to (a:
 	"",

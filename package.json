@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "description": "A simple adventure game exploring the dark cellar under an abandoned house. Navigate various rooms and puzzles to find the heart of the cellar.",
   "scripts": {
-    "build": "yarn run spindle",
+    "build": "spindle",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Brandon Risberg",
   "license": "MIT",
   "devDependencies": {
-    "@brisberg/spindle": "^0.3.0"
+    "@brisberg/spindle": "^0.5.0"
   }
 }

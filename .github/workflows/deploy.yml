@@ -9,4 +9,4 @@ permissions:
 
 jobs:
   deploy:
-    uses: brisberg/ci/.github/workflows/twine-pages.yml@v1
+    uses: brisberg/ci/.github/workflows/twine-pages.yml@v2

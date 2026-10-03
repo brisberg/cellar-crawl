@@ -168,9 +168,20 @@ Built in critical-path order. Room details are in [docs/Layout.md](docs/Layout.m
 
 ## Phase 5 — Extras
 
-- [ ] **Listening wall** in the Junction: `(storylet:)` / `(open-storylets:)` hints keyed to progress, with one hint per unsolved puzzle and a fallback whisper.
-- [ ] **Chalk-mark save** in the Junction with `(save-game:)`, plus `(load-game:)` on Entrance or a title passage.
-- [ ] Analytics events (`pushEvent`) for each puzzle solved, the collapse start, the `Buried` ending, and the win.
+- [x] **Listening wall** in the Junction ([hints.tw](src/story/hints.tw)). There is one storylet passage per next step (tag `hint`), ordered by `(urgency:)`: escape (during the collapse) > wheel > drain > plate > unread marks > dials > open door, plus an always-open fallback. The Junction displays `(open-storylets:)'s 1st`.
+- [x] **Chalk-mark save** in the Junction with `(save-game: "chalk")`. It is disabled during the collapse, so a save can't capture a doomed position. Load (`(load-game:)`) is offered in `Buried`, and at the Entrance until the player first reaches the Storeroom.
+- [x] **Analytics:** `pushEvent('Story', 'Puzzle', <door|bricks|wheel|cistern|bolt|plate|dials>)`, plus `Save` and `Load`. The existing `Start`, `Hammer`, `Heartstone` (= collapse start) and `Finish` (`Escape` / `Buried`) events are unchanged.
+
+### Findings
+
+- **Inline `<script>` tags run 2–4 times per render.** Harlowe re-inserts rendered markup for `(display:)`, macro output and transitions, and each insertion re-runs scripts. Every analytics event, including the pre-existing `Start`, was being counted multiple times in production. `pushEvent` ([header/analytics.html](header/analytics.html)) now drops an identical event repeated within 250 ms. The duplicates arrive within about 10 ms.
+- **Harlowe 3.3 restores the in-progress game from `sessionStorage` on reload.** Reloading the page does not restart the game. Tests simulate a new session with `game.newSession()`, which clears sessionStorage and keeps localStorage save slots.
+- **`(load-game:)` swaps the passage asynchronously,** after transitions have finished. The test helper's `settle()` now also waits for the story text to stop changing.
+- **Metadata macros (`(storylet:)`, `(urgency:)`) must come before any other macro in a passage;** an HTML comment before them was avoided to be safe.
+
+### Done when
+
+- [x] 36 tests pass, including hint order, save/load (from Buried and from a new session), no saving during the collapse, and the exact analytics sequence for the critical path. The marks-hint condition, the collapse save block and the analytics debounce were each broken on purpose and caught.
 
 ## Phase 6 — Wrap-up
 

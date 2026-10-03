@@ -58,7 +58,7 @@ First dial: |dial1>[(cycling-link: bind $dial1, ...(_from's ($dial1)))]
 Second dial: |dial2>[(cycling-link: bind $dial2, ...(_from's ($dial2)))]
 Third dial: |dial3>[(cycling-link: bind $dial3, ...(_from's ($dial3)))]
 
-(link-repeat: "Push the door")[(replace: ?heartdoorresult)[(if: $dial1 is "wave" and $dial2 is "root" and $dial3 is "flame")[(set: $heart_door_open to true)The dials click into place, and the door swings inward.](else:)[The door holds fast.](rerun: ?heartdoor)]]]\
+(link-repeat: "Push the door")[(replace: ?heartdoorresult)[(if: $dial1 is "wave" and $dial2 is "root" and $dial3 is "flame")[<script>pushEvent('Story', 'Puzzle', 'dials')</script>(set: $heart_door_open to true)The dials click into place, and the door swings inward.](else:)[The door holds fast.](rerun: ?heartdoor)]]]\
 (else:)[The wooden door stands open. [[Open the door.->Heart Chamber]]]]
 |heartdoorresult>[]
 

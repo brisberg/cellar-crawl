@@ -1,0 +1,39 @@
+:: Hint Escape [hint]
+(storylet: when $collapsing)(urgency: 100)\
+Not back the way you came. Up, through the drained shaft, and out!
+
+
+:: Hint Wheel [hint]
+(storylet: when $wheel_stuck)(urgency: 60)\
+In the room of pipes, iron has bitten iron. Strike it, and it will let go.
+
+
+:: Hint Drain [hint]
+(storylet: when not $wheel_stuck and not $cistern_drained)(urgency: 50)\
+The still water waits for a wheel to turn it.
+
+
+:: Hint Plate [hint]
+(storylet: when $cistern_drained and not ((history:) contains "Echo Fork"))(urgency: 40)\
+Below the water, the plate hungers for weight. Feed it something heavy.
+
+
+:: Hint Marks [hint]
+(storylet: when $inspected's length < 3 and not $heart_door_open)(urgency: 30)\
+Marks are scratched and carved where the water ran and the wine was kept. Have you looked closely at them all?
+
+
+:: Hint Dials [hint]
+(storylet: when not $heart_door_open)(urgency: 20)\
+Count the notches. Each one names a dial.
+
+
+:: Hint Heart [hint]
+(storylet: when $heart_door_open and $where's heartstone is "Heart Chamber")(urgency: 10)\
+The door stands open. The heart is waiting for you.
+
+
+:: Hint Fallback [hint]
+(storylet: when true)(urgency: -1)\
+<!-- Always open, lowest urgency, so (open-storylets:) is never empty. -->\
+Only the heartbeat answers.

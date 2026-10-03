@@ -26,6 +26,12 @@ test('critical path: Entrance to win', async ({ game }) => {
 
   await game.click('Escape');
   expect(await game.text()).toContain('You Win!');
+
+  expect(await game.analytics(), 'analytics events, in order').toEqual([
+    ['Start', ''],
+    ['Puzzle', 'door'], ['Hammer', 'Take'], ['Puzzle', 'bricks'], ['Puzzle', 'wheel'], ['Puzzle', 'cistern'],
+    ['Puzzle', 'bolt'], ['Puzzle', 'plate'], ['Puzzle', 'dials'], ['Heartstone', 'Take'], ['Finish', 'Escape'],
+  ]);
 });
 
 test('inventory lists carried items and shows descriptions', async ({ game }) => {

@@ -57,8 +57,10 @@ test('key unlocks the door', async ({ game }) => {
 ```
 
 - `click(label)` matches the **full text** of a link, a `(click:)` enchantment or a dialog button, and fails unless exactly one element matches. A link that is missing or ambiguous is a test failure, not a silent no-op. If a dialog is open, only its buttons are considered.
+- `analytics()` returns the `[action, label]` pairs the game sent to `pushEvent`, in order. GTM itself is blocked, but the in-page `dataLayer` still records them.
+- `newSession()` simulates closing and reopening the tab. Harlowe 3.3 restores the in-progress game from `sessionStorage` on reload, so a plain reload does *not* restart; save slots in `localStorage` survive.
 - `click(label, { within: 'dial1' })` limits the search to a named hook. Use it when identical labels are intentional, like the three dials.
-- Every click waits for Harlowe's transitions to finish (until no `<tw-transition-container>` remains), so there are no fixed sleeps.
+- Every click waits until Harlowe has settled: no `<tw-transition-container>` remains and the story text is unchanged across two reads 100 ms apart. The second check catches asynchronous changes like `(load-game:)`.
 
 **Why Playwright and not the earlier hand-rolled headless Chrome script:** the script needed workarounds that made it untrustworthy.
 

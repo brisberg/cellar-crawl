@@ -27,4 +27,5 @@ With a final, deafening *crack*, the ceiling gives way. Stone and earth pour dow
 
 The Dark Cellar has claimed you.
 
-(link: "Try again")[(restart:)]
+(if: (saved-games:) contains "chalk")[(link: "Return to your chalk mark")[<script>pushEvent('Story', 'Load', 'chalk')</script>(load-game: "chalk")]
+](link: "Try again")[(restart:)]

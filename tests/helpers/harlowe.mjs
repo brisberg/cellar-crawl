@@ -35,6 +35,15 @@ export class Game {
     await this.click('Entrance');
   }
 
+  /**
+   * Simulates closing the tab and reopening the game: clears sessionStorage (where Harlowe 3.3
+   * keeps the in-progress game to survive a reload) but keeps localStorage (save slots).
+   */
+  async newSession() {
+    await this.page.evaluate(() => sessionStorage.clear());
+    await this.start();
+  }
+
   passage() {
     return this.page.locator('tw-passage').last();
   }
@@ -61,9 +70,20 @@ export class Game {
     for (const label of labels) await this.click(label);
   }
 
-  /** Waits for Harlowe's passage/hook transitions to finish. */
+  /**
+   * Waits for Harlowe to finish: no transitions running, and the story text unchanged across
+   * two reads 100 ms apart. The stability check catches changes that start a beat after the
+   * click, such as (load-game:), which swaps the passage asynchronously.
+   */
   async settle() {
-    await this.page.waitForFunction(() => !document.querySelector('tw-transition-container'));
+    let previous = null;
+    for (;;) {
+      await this.page.waitForFunction(() => !document.querySelector('tw-transition-container'));
+      const current = await this.page.locator('tw-story').innerText();
+      if (current === previous) return;
+      previous = current;
+      await this.page.waitForTimeout(100);
+    }
   }
 
   /** Visible passage text (including header/footer output), whitespace-collapsed. */
@@ -78,6 +98,13 @@ export class Game {
   /** Dialog button labels, in order. */
   async dialogButtons() {
     return (await this.dialog().locator('tw-dialog-links tw-link').allInnerTexts()).map((t) => t.trim());
+  }
+
+  /** Analytics events pushed by the game's pushEvent(), as [action, label] pairs, in order. */
+  async analytics() {
+    return this.page.evaluate(() =>
+      (window.dataLayer ?? []).filter((e) => e.event === window.GAME_NAME).map((e) => [e.action, e.label]),
+    );
   }
 
   async canUndo() {

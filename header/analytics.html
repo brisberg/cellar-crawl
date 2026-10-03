@@ -9,7 +9,17 @@
         'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
   })(window, document, 'script', 'dataLayer', 'GTM-T6XR5LZ');
 
+  // Harlowe re-inserts rendered markup ((display:), macro output, transitions), and each
+  // insertion re-runs inline <script> tags, so one story event arrives 2-4 times within
+  // a few ms. Drop an identical event repeated within 250 ms; real repeats are slower.
+  let lastEventKey = '';
+  let lastEventAt = 0;
   window.pushEvent = (category, action, label, value) => {
+    const key = JSON.stringify([category, action, label, value]);
+    const now = Date.now();
+    if (key === lastEventKey && now - lastEventAt < 250) return;
+    lastEventKey = key;
+    lastEventAt = now;
     window.dataLayer.push({
       event: GAME_NAME,
       category,

@@ -5,6 +5,15 @@ The crawlway opens into a wide natural cavern. Water has carved the walls into s
 (display: "CurrentSoundMsg")
 
 To one side, a [[low doorway->Pump Room]] leads into a room full of pipes. Opposite it, a [[brick archway->Cistern]] smells of standing water.
+
+<!-- Listening wall: shows the most urgent open storylet tagged "hint" (src/story/hints.tw). -->\
+The far wall is cracked and hollow, and the heartbeat seems loudest there. (link-repeat: "Press your ear to the wall")[(replace: ?whisper)[You press your ear to the cold stone. A whisper rides the heartbeat: //(display: (open-storylets:)'s 1st's name)//]]
+|whisper>[]
+
+<!-- Save point. Disabled during the collapse, so a save can never capture a doomed position. -->\
+(if: $collapsing)[The chalk mark on the wall has vanished under a layer of fallen dust.]\
+(else:)[Someone has drawn a fresh (link-repeat: "chalk mark")[(replace: ?saveresult)[(if: (save-game: "chalk", "Junction"))[<script>pushEvent('Story', 'Save', 'chalk')</script>You trace over the chalk mark with your finger. If the worst happens, you can find your way back here.](else:)[You trace over the chalk mark, but it smudges away. (Your browser blocked saving.)]]] on the wall.]
+|saveresult>[]
 (if: $collapsing)[The crawlway behind you has collapsed into a wall of rubble.]\
 (else:)[[[Climb back up the crawlway->Crawlway3]]]
 
@@ -26,6 +35,7 @@ Scratched into the pump housing is a ($reveal: "pump-mark", "mark", ": ''a singl
 
 
 :: use-hammer-wheel [use]
+<script>pushEvent('Story', 'Puzzle', 'wheel')</script>\
 (set: $wheel_stuck to false)($move: "valve-wheel", "player")\
 *Clang!* The rust gives way, and the valve wheel drops into your hands.
 
@@ -44,6 +54,7 @@ Scratched into the floor of the tank is a ($reveal: "cistern-mark", "mark", ": '
 
 
 :: use-wheel-stem [use]
+<script>pushEvent('Story', 'Puzzle', 'cistern')</script>\
 ($move: "valve-wheel", "gone")(set: $cistern_drained to true)\
 You fit the valve wheel onto the stem and heave. It turns with a groan, and somewhere below, a sluice opens. With a deep gurgle, the water drains away.
 
@@ -70,5 +81,7 @@ A square chamber of fitted stone. An iron portcullis bars the passage onward, an
 
 
 :: use-plate [use]
+<!-- Counted until the player first goes through the portcullis; later re-weighting is not a new solve. -->\
+(unless: (history:) contains "Echo Fork")[<script>pushEvent('Story', 'Puzzle', 'plate')</script>]\
 ($move: $used_item, "Weighing Room")\
 You set the (print: ($name: $used_item)) on the plate. It sinks with a heavy ''clunk'', and the portcullis grinds upward on its chains.

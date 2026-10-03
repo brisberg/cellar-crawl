@@ -79,6 +79,7 @@ A wider natural cavern where the crawlway opens out. The heartbeat is clearly au
 - **Exits:** Crawlway, Pump Room, Cistern.
 - **Listening wall (storylets):** "Press your ear to the wall" offers a whisper chosen by `(storylet:)` based on game state. It works as an in-world hint system, e.g. "something turns, in the room of pipes" when the valve wheel is still stuck.
 - **Save point:** a chalk mark on the wall. Clicking it calls `(save-game:)`. The title or Entrance offers `(load-game:)`.
+- **Built:** hints live in [hints.tw](../src/story/hints.tw), one storylet per next step, ordered by `(urgency:)`. One hint nudges players who haven't read all three clue marks. Saving is disabled during the collapse (the chalk mark is "buried in dust"). Loading is offered in `Buried`, and at the Entrance until the player first reaches the Storeroom.
 
 ### 5. Pump Room — *new*
 

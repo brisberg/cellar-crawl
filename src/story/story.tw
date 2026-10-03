@@ -10,9 +10,12 @@ The air smells stale and dusty, as if it hasn't been moved in years.
 (if: $wine_door_bolted)[A heavy door on the far wall is bolted from the other side.]\
 (else:)[A [[heavy door->Wine Cellar]] on the far wall stands unbolted.]
 (if: ($has: "heartstone"))[[[Escape->Escape]] with the Heartstone!]
+<!-- Continue from a chalk-mark save, offered until the player first goes through to the Storeroom. -->\
+(if: (saved-games:) contains "chalk" and not ((history:) contains "Storeroom"))[(link: "Return to your chalk mark")[<script>pushEvent('Story', 'Load', 'chalk')</script>(load-game: "chalk")]]
 
 
 :: use-key-door [use] {"position":"25,250","size":"100,100"}
+<script>pushEvent('Story', 'Puzzle', 'door')</script>\
 ($move: "rusty-key", "gone")(set: $door_locked to false)\
 You unlock the door with the Rusty Key.
 
@@ -35,6 +38,7 @@ There is a [[door->Entrance]] back to the entrance.
 
 
 :: use-hammer-bricks [use]
+<script>pushEvent('Story', 'Puzzle', 'bricks')</script>\
 (set: $wall_intact to false)\
 *Slam* Bricks fly and crumble under your hammer.
 
@@ -45,7 +49,7 @@ A long, vaulted wine cellar. Racks of dusty casks line both walls, their labels 
 
 Cut into the end of one rack is a ($reveal: "wine-mark", "vintner's mark", ": ''three notches beside a small flame''").
 
-|winespot>[(if: $wine_door_bolted)[A heavy door at the far end is bolted from this side. (link-repeat: "Draw the bolt")[(replace: ?wineresult)[(set: $wine_door_bolted to false)You draw back the stiff iron bolt with a screech.(rerun: ?winespot)]]]\
+|winespot>[(if: $wine_door_bolted)[A heavy door at the far end is bolted from this side. (link-repeat: "Draw the bolt")[(replace: ?wineresult)[<script>pushEvent('Story', 'Puzzle', 'bolt')</script>(set: $wine_door_bolted to false)You draw back the stiff iron bolt with a screech.(rerun: ?winespot)]]]\
 (else:)[The heavy [[door->Entrance]] at the far end stands unbolted.]]
 |wineresult>[]
 

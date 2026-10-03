@@ -1,11 +1,12 @@
 :: Inventory [noInvLink noInvDisplay] {"position":"400,0","size":"100,100"}
-(if: $inv's length > 0)[You are carrying (print: (joined: ", ", ...$inv))]
-(else:)[You are carrying nothing.]
+(set: _items to ($carried:))\
+(if: _items's length is 0)[You are carrying nothing.]\
+(else:)[You are carrying:
+(for: each _id, ..._items)[
+* (link-repeat: ($name: _id))[(replace: ?desc)[(display: _id + "-item")]]]
+]
 
-(click: "lantern")[(display: "lantern-item")]
-(click: "rusty key")[(display: "rusty-key-item")]
-(click: "hammer")[(display: "hammer-item")]
-(click: "heartstone")[(display: "heartstone-item")]
+|desc>[]
 
 (link-goto: "Return", (history:)'s last)
 
@@ -18,7 +19,7 @@ A copper, hooded lantern with a small oil burner, which easily illuminates a roo
 An old, rusted iron key.
 
 
-:: hammer-item [item] {"position":"800,0","size":"100,100"}
+:: hammer-item [item heavy] {"position":"800,0","size":"100,100"}
 A solid iron sledgehammer.
 
 

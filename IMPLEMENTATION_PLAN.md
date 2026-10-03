@@ -52,18 +52,21 @@ Prototype tested in headless Chrome against Harlowe 3.3.9:
 
 ### Tasks
 
-- [ ] Replace `$inv` with `$where` in [start.tw](src/story/start.tw).
-- [ ] Add helpers (custom `(macro:)` stored in variables in Startup):
+- [x] Replace `$inv` with `$where` in [start.tw](src/story/start.tw).
+- [x] Add helpers (custom `(macro:)` stored in variables in Startup):
   - `$carried`: returns the array of IDs whose location is `"player"`.
   - `$has`: `(has: "hammer")` → boolean.
   - `$move`: sets an item's location (pick up, drop, place, consume = `"gone"`).
+  - `$name`: display name from ID (hyphens → spaces).
   - Verified in phase 0: custom macros can perform `(set:)` via `(output:)`.
-- [ ] Rebuild the [Inventory](src/story/inventory.tw) passage with `(for: each _id, ...$carried)` and `(link:)` per item, showing the item's description passage. Remove the hardcoded `(click:)` lines.
-- [ ] Rebuild the [Footer](src/story/footer.tw) list from `$carried` using display names.
-- [ ] Migrate the existing passages: replace `$storeroom_hammer`, `$heartstone`, and every `$inv contains` check.
-- [ ] Rename `rusty-key-item` etc. to match the ID convention (most already do).
+- [x] Rebuild the [Inventory](src/story/inventory.tw) passage with `(for: each _id, ...$carried)` and `(link:)` per item, showing the item's description passage. Remove the hardcoded `(click:)` lines.
+- [x] Rebuild the [Footer](src/story/footer.tw) list from `$carried` using display names.
+- [x] Migrate the existing passages: replace `$storeroom_hammer`, `$heartstone`, and every `$inv contains` check.
+- [x] Item passages already match the ID convention. `hammer-item` is now tagged `heavy`.
 
 ### Done when
+
+Verified with a scripted headless playthrough, from start to the win, diffed against the pre-change build. The only differences are the new Inventory layout and alphabetical item order. The old Inventory's description-stacking bug is gone.
 
 - The current 5-passage game plays identically on the new model.
 - A grep for `$inv`, `$storeroom_hammer`, or `$heartstone` returns nothing.

@@ -8,7 +8,9 @@ Built with [Tweego](https://www.motoslave.net/tweego/) via [Spindle](https://git
 ### Features
 
 - Mainly a test game to explore some mechanics of Twine/Harlowe
-- Simple inventory system (string based)
+- Location-based inventory: one `$where` datamap tracks every item (`"player"`, a passage name, or `"gone"`)
+- Custom macros (`$has`, `$move`, `$carried`, `$name`) as item helpers
+- Static item properties as passage tags (e.g. `heavy`)
 - Item pick ups (keys)
 - Locked passages needing keys
 - Startup, Footer passages

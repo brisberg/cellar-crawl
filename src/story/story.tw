@@ -8,14 +8,14 @@ The air smells stale and dusty, as if it hasn't been moved in years.
   (click: ?door)[(display: "door")]
 ]\
 (else:)[There is an unlocked [[door->Storeroom]].]
-(if: $inv contains "heartstone")[[[Escape->Escape]] with the Heartstone!]
+(if: ($has: "heartstone"))[[[Escape->Escape]] with the Heartstone!]
 
 
 :: door [noInvLink noInvDisplay] {"position":"25,250","size":"100,100"}
 (if: $door_locked is true)[\
-  (if: $inv contains "rusty key")[\
+  (if: ($has: "rusty-key"))[\
 	You unlock the [[door->Storeroom]] with the Rusty Key.
-	(set: $inv to $inv - (a: "rusty key"))
+	($move: "rusty-key", "gone")
 	(set: $door_locked to false)
   ]\
   (else:)[The door is locked and requires a key.]
@@ -25,15 +25,14 @@ The air smells stale and dusty, as if it hasn't been moved in years.
 :: Storeroom {"position":"150,125","size":"100,100"}
 You stand in a musky Storeroom. The walls are lined with casks and barrels filled with long-forgotten wine.
 
-(if: $storeroom_hammer is true)[There is a hammer resting on the table.]<hammer|
+(if: $where's hammer is "Storeroom")[There is a hammer resting on the table.]<hammer|
 (click-replace: ?hammer)[You take the hammer.\
   <script>pushEvent('Story', 'Hammer', 'Take')</script>\
-  (set: $inv to $inv + (a: "hammer"))\
-  (set: $storeroom_hammer to false)\
+  ($move: "hammer", "player")\
 ]
 
 (if: $wall_intact is true)[Some of the (link-repeat: "bricks")[\
-  (if: $inv contains "hammer")[\
+  (if: ($has: "hammer"))[\
     (replace: ?wallresult)[*Slam* Bricks fly and crumble under your hammer, revealing a [[dark passage->Tunnel1-dark]].]\
     (set: $wall_intact to false)\
   ]\
@@ -55,7 +54,7 @@ You crouch in a dark tunnel, unable to see your hand in front of your face.
 
 (display: "CurrentSoundMsg")
 
-(if: $inv contains "lantern")[\
+(if: ($has: "lantern"))[\
   Light your [lantern]<lantern|.
   (click: ?lantern)[\
     (set: $lantern_lit to true)\
@@ -74,7 +73,7 @@ The rock walls appear smooth, as if dug by flowing water pressure. The tunnel ma
 (display: "CurrentSoundMsg")
 
 [[Follow it.->Tunnel2]]
-(if: $heartstone is true)[[[Turn back->Storeroom]]]\
+(if: $where's heartstone is "Heartroom")[[[Turn back->Storeroom]]]\
 (else:)[[[Escape->Storeroom]]]
 
 
@@ -85,7 +84,7 @@ It takes some time to crawl through the narrow tunnel, but you make steady progr
 (display: "CurrentSoundMsg")
 
 [[Continue.->Tunnel3]]
-(if: $heartstone is true)[[[Turn back->Tunnel1]]]\
+(if: $where's heartstone is "Heartroom")[[[Turn back->Tunnel1]]]\
 (else:)[[[Escape->Tunnel1]]]
 
 :: Tunnel3
@@ -98,7 +97,7 @@ lacquer finish and a golden handle, but has since decayed from misuse.]
 (display: "CurrentSoundMsg")
 
 [[Open the door.->Heartroom]]
-(if: $heartstone is true)[[[Turn back->Tunnel2]]]\
+(if: $where's heartstone is "Heartroom")[[[Turn back->Tunnel2]]]\
 (else:)[[[Escape->Tunnel2]]]
 
 :: Heartroom
@@ -106,7 +105,7 @@ lacquer finish and a golden handle, but has since decayed from misuse.]
 Behind the door is a small antechamber with rough-hewn stone covering the walls and floor. In each corner is a \
 sconce with a luminous crystal casting red light across the floor.
 
-(if: $heartstone is true)[\
+(if: $where's heartstone is "Heartroom")[\
   In the center is a stone pedestal with a fist-sized blood red gem. Its facets seem to shift and \
   reverberate with the sound.
 
@@ -121,8 +120,7 @@ sconce with a luminous crystal casting red light across the floor.
 
 (click: "Take the Heartstone")[\
   <script>pushEvent('Story', 'Heartstone', 'Take')</script>\
-  (set: $inv to $inv + (a: "heartstone"))\
-  (set: $heartstone to false)\
+  ($move: "heartstone", "player")\
   (replace: ?heartstone)[\
     ---
     The gem feels heavy, and warm in your hand. It seems to jostle and shake of its own accord.

@@ -1,11 +1,24 @@
 :: Startup [startup] {"position":"25,0","size":"100,100"}
 <!-- Set up Initial Variables -->\
 <script>pushEvent('Story', 'Start', '');</script>\
-(set: $inv to (a: "lantern", "rusty key"))\
+\
+<!-- Item locations: "player", a passage name, or "gone". Single source of truth for every item. -->\
+<!-- Item IDs are hyphenated; each has an "<id>-item" description passage tagged "item". -->\
+(set: $where to (dm:
+	"lantern", "player",
+	"rusty-key", "player",
+	"hammer", "Storeroom",
+	"heartstone", "Heartroom",
+))\
+\
+<!-- Item helpers -->\
+(set: $move to (macro: str-type _id, str-type _loc, [(output:)[(set: $where's (_id) to _loc)]]))\
+(set: $has to (macro: str-type _id, [(output-data: $where's (_id) is "player")]))\
+(set: $carried to (macro: [(output-data: (find: _x where $where's (_x) is "player", ...(dm-names: $where)))]))\
+(set: $name to (macro: str-type _id, [(output-data: (str-replaced: "-", " ", _id))]))\
+\
 (set: $door_locked to true)\
-(set: $storeroom_hammer to true)\
 (set: $wall_intact to true)\
-(set: $heartstone to true)\
 (set: $lantern_lit to false)\
 (set: $thud_lvl to 1)\
 \

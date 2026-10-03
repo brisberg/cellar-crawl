@@ -137,7 +137,7 @@ The last row is why this step matters.
 
 In priority order:
 
-1. **Run tests in CI.** [deploy.yml](../.github/workflows/deploy.yml) calls the shared `brisberg/ci` Pages workflow, which may not run `npm test`. Add a test job that runs before the deploy: `npm ci`, `npx playwright install --with-deps chromium`, `npm test`. Playwright's `github` reporter is already enabled when `CI` is set.
+1. ~~**Run tests in CI.**~~ Drafted. [ci.yml](../.github/workflows/ci.yml) calls `brisberg/ci`'s `twine-test.yml` on every push, and deploys via `twine-pages.yml` only from `main` after the tests pass. Failed runs upload `test-output/results` (traces) as an artifact.
 2. **Soft-lock explorer (high value for Phase 4).** [Layout.md](Layout.md) promises "no soft-locks". A crawler could do a breadth-first search over the game: try every clickable link and dialog button, key each state on `passage + state()`, and assert that `You Win!` is still reachable from every reachable state. It needs a depth cap and a way to restore state, by re-running a recorded path or using Harlowe's `(save-game:)`. This is the only practical way to *prove* the soft-lock checks once there are about 10 rooms.
 3. **Prose linting:** run `cspell` over `src/**/*.tw` with a project word list. The last few commits were typo fixes.
 4. **Random-walk smoke test:** a cheap alternative to item 2. Make N random clicks with a fixed seed and check only the invariants. It finds crashes and loops, not soft-locks.

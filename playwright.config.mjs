@@ -6,6 +6,7 @@ export default defineConfig({
   globalSetup: './tests/global-setup.mjs',
   outputDir: 'test-output/results',
   fullyParallel: true,
+  forbidOnly: !!process.env.CI, // a stray test.only must not silently skip the suite in CI
   reporter: process.env.CI ? 'github' : 'list',
   use: {
     ...devices['Desktop Chrome'],

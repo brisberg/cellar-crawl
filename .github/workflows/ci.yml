@@ -1,0 +1,24 @@
+name: CI
+on:
+  push:
+  workflow_dispatch:
+  # pull_request: # Enable once we allow collaborators
+
+# Test and deploy live in one workflow so the deploy waits for the tests.
+# Permissions are per job: only the deploy job can write to Pages.
+jobs:
+  test:
+    permissions:
+      contents: read
+    uses: brisberg/ci/.github/workflows/twine-test.yml@v2
+    with:
+      artifacts-path: test-output/results
+
+  deploy:
+    needs: test
+    if: github.ref == 'refs/heads/main'
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    uses: brisberg/ci/.github/workflows/twine-pages.yml@v2

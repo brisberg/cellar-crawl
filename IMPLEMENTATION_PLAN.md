@@ -80,13 +80,17 @@ Verified with a scripted headless playthrough, from start to the win, diffed aga
 A hotspot opens a `(dialog:)` that lists carried items. The hotspot supplies a datamap of item ID → outcome. Any other item gives a generic "Nothing happens."
 
 ```
-Some of the (link-repeat: "bricks")[(replace: ?wallresult)[($useOn: "the loose bricks", (dm: "hammer", "use-hammer-bricks"), "The brick wall sounds hollow...")]] look loose.
+|wallspot>[(if: $wall_intact is true)[Some of the (link-repeat: "bricks")[(replace: ?wallresult)[($useOn: "the loose bricks", (dm: "hammer", "use-hammer-bricks"), "The brick wall sounds hollow...")(rerun: ?wallspot)]] look loose.]\
+(else:)[The broken wall reveals a [[dark passage->Tunnel1-dark]].]]
 |wallresult>[]
 ```
 
 - The outcome is a passage name to `(display:)`. Outcome passages are tagged `use` and named `use-<item>-<target>`.
 - Optional third argument: a fallback message for wrong items. Without it, wrong items print "Nothing happens." Cancel prints nothing.
-- **Hotspot pattern:** `(link-repeat:)` plus `(replace:)` into a result hook, so a wrong guess can be retried. `(click:)` fires only once.
+- **Hotspot pattern:**
+  - Use `(link-repeat:)` plus `(replace:)` into a result hook, so a wrong guess can be retried. `(click:)` fires only once.
+  - Wrap the hotspot in a named hook that branches on world state, and `(rerun:)` it after `$useOn`. Room text is drawn once, so without the rerun a completed hotspot stays clickable and can overwrite the success message.
+  - The result hook sits *outside* the rerun hook. Outcome passages print only the action message; the rerun hotspot supplies any onward link.
 
 ### Tasks
 

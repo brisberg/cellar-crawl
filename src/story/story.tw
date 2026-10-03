@@ -3,17 +3,16 @@ You stand at the bottom of a ladder into a dark cellar.
 
 The air smells stale and dusty, as if it hasn't been moved in years.
 
-(if: $door_locked is true)[\
-  There is a (link-repeat: "door")[(replace: ?doorresult)[($useOn: "the iron lock", (dm: "rusty-key", "use-key-door"), "The door is locked and requires a key.")]] with a small, iron lock.
-  |doorresult>[]
-]\
-(else:)[There is an unlocked [[door->Storeroom]].]
+<!-- Hotspot pattern: the hook is rerun after every use, so it always reflects current world state. -->\
+|doorspot>[(if: $door_locked is true)[There is a (link-repeat: "door")[(replace: ?doorresult)[($useOn: "the iron lock", (dm: "rusty-key", "use-key-door"), "The door is locked and requires a key.")(rerun: ?doorspot)]] with a small, iron lock.]\
+(else:)[There is an unlocked [[door->Storeroom]].]]
+|doorresult>[]
 (if: ($has: "heartstone"))[[[Escape->Escape]] with the Heartstone!]
 
 
 :: use-key-door [use] {"position":"25,250","size":"100,100"}
 ($move: "rusty-key", "gone")(set: $door_locked to false)\
-You unlock the [[door->Storeroom]] with the Rusty Key.
+You unlock the door with the Rusty Key.
 
 
 :: Storeroom {"position":"150,125","size":"100,100"}
@@ -25,17 +24,16 @@ You stand in a musky Storeroom. The walls are lined with casks and barrels fille
   ($move: "hammer", "player")\
 ]
 
-(if: $wall_intact is true)[Some of the (link-repeat: "bricks")[(replace: ?wallresult)[($useOn: "the loose bricks", (dm: "hammer", "use-hammer-bricks"), "The brick wall sounds hollow, but you cannot budge it with your bare hands.")]] in the wall look loose.]\
-(else:)[The broken wall reveals a [[dark passage->Tunnel1]].]\
-
-|wallresult)[]
+|wallspot>[(if: $wall_intact is true)[Some of the (link-repeat: "bricks")[(replace: ?wallresult)[($useOn: "the loose bricks", (dm: "hammer", "use-hammer-bricks"), "The brick wall sounds hollow, but you cannot budge it with your bare hands.")(rerun: ?wallspot)]] in the wall look loose.]\
+(else:)[The broken wall reveals a [[dark passage->Tunnel1-dark]].]]
+|wallresult>[]
 
 There is a [[door->Entrance]] back to the entrance.
 
 
 :: use-hammer-bricks [use]
 (set: $wall_intact to false)\
-*Slam* Bricks fly and crumble under your hammer, revealing a [[dark passage->Tunnel1-dark]].
+*Slam* Bricks fly and crumble under your hammer.
 
 
 :: Tunnel1-dark

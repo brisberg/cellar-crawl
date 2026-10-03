@@ -12,10 +12,28 @@
 ))\
 \
 <!-- Item helpers -->\
-(set: $move to (macro: str-type _id, str-type _loc, [(output:)[(set: $where's (_id) to _loc)]]))\
+<!-- $move also reruns the footer's inventory list so it stays current when items change mid-passage. -->\
+(set: $move to (macro: str-type _id, str-type _loc, [(output:)[(set: $where's (_id) to _loc)(rerun: ?footerinv)]]))\
 (set: $has to (macro: str-type _id, [(output-data: $where's (_id) is "player")]))\
 (set: $carried to (macro: [(output-data: (find: _x where $where's (_x) is "player", ...(dm-names: $where)))]))\
 (set: $name to (macro: str-type _id, [(output-data: (str-replaced: "-", " ", _id))]))\
+\
+<!-- ($useOn: target, outcomes, [fallback]) -->\
+<!-- Opens a dialog listing carried items. outcomes maps item ID -> passage to (display:) when that item is chosen. -->\
+<!-- Any other item prints the fallback message, or "Nothing happens." Cancel prints nothing. -->\
+<!-- Note: a blocking (dialog:) breaks (else:) chains around it, so use separate (if:)s, not (if:)/(else:). -->\
+(set: $useOn to (macro: str-type _target, dm-type _outcomes, ...str-type _fallback, [(output:)[\
+(set: _items to ($carried:))\
+(if: _items's length is 0)[(dialog: "You have nothing to use on " + _target + ".")]\
+(if: _items's length > 0)[\
+(set: _choice to "Cancel")\
+(dialog: bind _choice, "Use what on " + _target + "?", ...(altered: _x via ($name: _x), ..._items), "Cancel")\
+(unless: _choice is "Cancel")[\
+(set: _id to (find: _x where ($name: _x) is _choice, ..._items)'s 1st)\
+(if: _outcomes contains _id)[(display: _outcomes's (_id))]\
+(else-if: _fallback's length > 0)[(print: _fallback's 1st)]\
+(else:)[Nothing happens.]\
+]]]]))\
 \
 (set: $door_locked to true)\
 (set: $wall_intact to true)\

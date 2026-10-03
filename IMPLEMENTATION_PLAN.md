@@ -80,21 +80,32 @@ Verified with a scripted headless playthrough, from start to the win, diffed aga
 A hotspot opens a `(dialog:)` that lists carried items. The hotspot supplies a datamap of item ID → outcome. Any other item gives a generic "Nothing happens."
 
 ```
-(useOn: "the loose bricks", (dm: "hammer", "Smash-Bricks"))
+Some of the (link-repeat: "bricks")[(replace: ?wallresult)[($useOn: "the loose bricks", (dm: "hammer", "use-hammer-bricks"), "The brick wall sounds hollow...")]] look loose.
+|wallresult>[]
 ```
 
-- The outcome is a passage name to `(display:)`. This keeps result logic in normal passages instead of strings.
-- Add an optional fallback-message argument per hotspot ("The plate doesn't budge.").
+- The outcome is a passage name to `(display:)`. Outcome passages are tagged `use` and named `use-<item>-<target>`.
+- Optional third argument: a fallback message for wrong items. Without it, wrong items print "Nothing happens." Cancel prints nothing.
+- **Hotspot pattern:** `(link-repeat:)` plus `(replace:)` into a result hook, so a wrong guess can be retried. `(click:)` fires only once.
 
 ### Tasks
 
-- [ ] Implement `$useOn` as a custom macro in Startup.
-- [ ] Convert the Storeroom bricks and the Entrance door to use it, as proof that it works.
-- [ ] Check that the dialog lists items correctly with 0, 1, and 5+ items, and that it renders at phone width.
+- [x] Implement `$useOn` as a custom macro in Startup.
+- [x] Convert the Storeroom bricks and the Entrance door to use it, as proof that it works.
+- [x] Check that the dialog lists items correctly with 0, 1, and 5+ items, and that it renders at phone width.
+- [x] Footer inventory refreshes mid-passage: it is a named hook `?footerinv`, and `$move` runs `(rerun: ?footerinv)`.
+- [x] Add a story stylesheet ([style.tw](src/story/style.tw)) so dialog buttons wrap, and so dialogs are wider than Harlowe's 50vw default on phones.
+
+### Findings
+
+- **A blocking `(dialog:)` breaks `(else:)` chains.** After the dialog closes, a following `(else:)` errors ("There's nothing before this to do (else:) with") and its branch runs as well. Use separate `(if:)` checks around any hook that contains a dialog.
+- `(dialog: bind _var, ...)` blocks the rest of the hook until a button is pressed, so the macro can act on the choice inline. No callback passage is needed.
+- Labels map back to IDs by matching `($name:)` against carried items. If two items ever share a display name, this breaks.
+- Headless screenshots at phone width must use a 375 px iframe. Headless Chrome won't make a window narrower than about 500 px.
 
 ### Done when
 
-- The bricks and door both work via `$useOn`, with a sensible message for every wrong item.
+- [x] The bricks and door both work via `$useOn`, with a sensible message for every wrong item. Verified by a headless playthrough covering Cancel, a wrong item and the right item on both hotspots, through to the win.
 
 ## Phase 3 — Collapse timer
 

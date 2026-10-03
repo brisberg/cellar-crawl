@@ -1,0 +1,20 @@
+:: StoryStylesheet [stylesheet]
+/* Dialog buttons ($useOn item lists) wrap instead of overflowing in a single row. */
+tw-dialog-links {
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 0.5em;
+}
+/* Harlowe sets per-button margins inline; gap replaces them. */
+tw-dialog-links tw-link {
+  margin: 0 !important;
+}
+
+/* Harlowe caps dialogs at 50vw, which is too narrow on phones. */
+@media (max-width: 600px) {
+  tw-dialog {
+    max-width: calc(100vw - 32px);
+    box-sizing: border-box;
+    padding: 1em;
+  }
+}

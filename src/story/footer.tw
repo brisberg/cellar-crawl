@@ -1,9 +1,9 @@
 :: Footer [footer] {"position":"125,0","size":"100,100"}
-<!-- Print the Inventory -->
-(set: _footerItems to ($carried:))\
+<!-- Print the Inventory. Named so $move can (rerun:) it when items change mid-passage. -->
+|footerinv>[(set: _footerItems to ($carried:))\
 (if: _footerItems's length > 0)[
   (if: (passage:)'s tags contains "noInvDisplay")[]\
   (else:)[You are carrying (print: (joined: ", ", ...(altered: _x via ($name: _x), ..._footerItems)))]
   (if: (passage:)'s tags contains "noInvLink")[]\
   (else:)[Check [[inventory->Inventory]]]
-]
+]]

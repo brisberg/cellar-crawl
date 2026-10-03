@@ -23,12 +23,31 @@ test.describe('Pump Room', () => {
     await game.play('valve wheel', 'hammer');
     const text = await game.text();
     expect(text).toContain('the valve wheel drops into your hands');
-    expect(text).toContain('a single notch beside a wavy line');
     expect(text, 'spent hotspot is gone').not.toContain('is rusted onto the end of a dead pipe');
 
     await game.click('A sandbag slumps beneath the dripping joint.');
     await game.click('Back to the cavern');
     expect((await game.state()).where).toMatchObject({ 'valve-wheel': 'player', sandbag: 'player' });
+  });
+});
+
+test.describe('Clue marks ($reveal)', () => {
+  test('a mark is hidden until clicked, then stays revealed on return', async ({ game }) => {
+    await toJunction(game);
+    await game.click('low doorway');
+    let text = await game.text();
+    expect(text).toContain('Scratched into the pump housing is a mark.');
+    expect(text).not.toContain('a single notch beside a wavy line');
+
+    await game.click('mark');
+    expect(await game.text()).toContain('is a mark: a single notch beside a wavy line.');
+
+    await game.play('Back to the cavern', 'low doorway');
+    text = await game.text();
+    expect(text, 'already inspected: rendered expanded').toContain('is a mark: a single notch beside a wavy line.');
+    const link = game.passage().locator('tw-link').filter({ hasText: /^mark$/ });
+    await expect(link, 'no link once inspected').toHaveCount(0);
+    expect((await game.state()).inspected).toEqual(['pump-mark']);
   });
 });
 
@@ -66,6 +85,7 @@ test.describe('Wine Cellar', () => {
 
     await game.play(...TO_STOREROOM, ...STOREROOM_TO_JUNCTION, ...PUMP_ROOM, ...DRAIN_CISTERN);
     await game.click('drain shaft');
+    await game.click("vintner's mark");
     expect(await game.text()).toContain('three notches beside a small flame');
     await game.click('Draw the bolt');
     expect(await game.text()).toContain('The heavy door at the far end stands unbolted.');

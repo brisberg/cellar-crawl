@@ -127,7 +127,7 @@ A knot of identical, rough-cut passages, about 4 passages with 2–3 exits each.
 ### 10. Heart Chamber — *exists as Heartroom*
 
 - **Door puzzle — dials:** the decayed wooden door with spindle inlay (existing Tunnel3 text) now holds three symbol dials, built with `(cycling-link: bind ...)`. The correct symbols come from the clues in rooms 5, 6, and 7.
-- **Built:** the door and dials are in the `Echo Door` passage, so entering the chamber isn't an extra move. The symbols are moon, wave, root and flame. The clues give the dial number as notches: Pump Room "a single notch beside a wavy line" → wave; Cistern "two notches beside a branching root" → root; Wine Cellar "three notches beside a small flame" → flame. A wrong combination gives "The door holds fast." Dial settings persist between visits.
+- **Built:** the door and dials are in the `Echo Door` passage, so entering the chamber isn't an extra move. The symbols are moon, wave, root and flame. The clues give the dial number as notches: Pump Room "a single notch beside a wavy line" → wave; Cistern "two notches beside a branching root" → root; Wine Cellar "three notches beside a small flame" → flame. A wrong combination gives "The door holds fast." Dial settings persist between visits. Each clue mark is click-to-reveal via `($reveal:)`: the room first shows "…is a mark." Once clicked, the id is stored in `$inspected` and the mark renders expanded on every later visit.
 - **Taking the Heartstone:** starts the collapse (see below).
 - **Change from current:** existing chamber text and take-sequence carry over.
 

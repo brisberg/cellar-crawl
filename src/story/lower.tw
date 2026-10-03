@@ -18,7 +18,7 @@ Rusted pipes crowd this low room, running from a great iron hand-pump into the w
 (if: $where's sandbag is "Pump Room")[A sandbag slumps beneath the dripping joint.]<sandbag|
 (click-replace: ?sandbag)[You heave the sandbag onto your shoulder.($move: "sandbag", "player")]
 
-Scratched into the pump housing is a mark: ''a single notch beside a wavy line''.
+Scratched into the pump housing is a ($reveal: "pump-mark", "mark", ": ''a single notch beside a wavy line''").
 
 (display: "CurrentSoundMsg")
 
@@ -35,7 +35,7 @@ Scratched into the pump housing is a mark: ''a single notch beside a wavy line''
 |cisternspot>[(if: not $cistern_drained)[Black water fills this vaulted brick tank to chest height. Its surface trembles faintly with every heartbeat. An empty (link-repeat: "valve stem")[(replace: ?cisternresult)[($useOn: "the valve stem", (dm: "valve-wheel", "use-wheel-stem"), "That doesn't fit the square stem.")(rerun: ?cisternspot)]] pokes out of the wall beside the archway.]\
 (else:)[The drained tank drips and echoes. Silt coats the brick floor. A flight of stone stairs, hidden until now, leads [[down into the dark->Weighing Room]]. Above, iron rungs climb a narrow [[drain shaft->Wine Cellar]].
 
-Scratched into the floor of the tank: ''two notches beside a branching root''.]]
+Scratched into the floor of the tank is a ($reveal: "cistern-mark", "mark", ": ''two notches beside a branching root''").]]
 |cisternresult>[]
 
 (display: "CurrentSoundMsg")

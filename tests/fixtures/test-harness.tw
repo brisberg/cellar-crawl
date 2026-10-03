@@ -20,6 +20,7 @@ Test fixtures:
 	"wine_door_bolted", $wine_door_bolted,
 	"heart_door_open", $heart_door_open,
 	"dials", (a: $dial1, $dial2, $dial3),
+	"inspected", $inspected,
 )))</div>
 
 

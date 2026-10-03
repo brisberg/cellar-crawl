@@ -10,17 +10,17 @@ export const STOREROOM_TO_JUNCTION = [
   'dark passage', 'lantern', 'Follow it.', 'Continue.', 'Climb down into the cavern',
 ];
 
-/** Junction -> Junction via the Pump Room (frees the valve wheel, takes the sandbag). */
+/** Junction -> Junction via the Pump Room (frees the valve wheel, takes the sandbag, reads clue #1). */
 export const PUMP_ROOM = [
   'low doorway', 'valve wheel', 'hammer',
-  'A sandbag slumps beneath the dripping joint.', 'Back to the cavern',
+  'A sandbag slumps beneath the dripping joint.', 'mark', 'Back to the cavern',
 ];
 
-/** Junction -> Cistern, drained. */
-export const DRAIN_CISTERN = ['brick archway', 'valve stem', 'valve wheel'];
+/** Junction -> Cistern, drained (reads clue #2). */
+export const DRAIN_CISTERN = ['brick archway', 'valve stem', 'valve wheel', 'mark'];
 
-/** Cistern -> Cistern via the Wine Cellar (draws the bolt). */
-export const WINE_CELLAR = ['drain shaft', 'Draw the bolt', 'Climb down the shaft'];
+/** Cistern -> Cistern via the Wine Cellar (reads clue #3, draws the bolt). */
+export const WINE_CELLAR = ['drain shaft', "vintner's mark", 'Draw the bolt', 'Climb down the shaft'];
 
 /** Cistern -> Echo Door (sandbag on the plate, right tunnel). */
 export const TO_HEART_DOOR = ['down into the dark', 'pressure plate', 'sandbag', 'Duck under the portcullis', 'Take the right tunnel'];

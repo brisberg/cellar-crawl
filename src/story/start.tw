@@ -40,6 +40,15 @@
 \
 (set: $used_item to "")\
 \
+<!-- ($reveal: id, label, detail) -->\
+<!-- Prints a clickable label; clicking it appends the detail and records the id in $inspected. -->\
+<!-- Once inspected, it renders label + detail with no link, on every later visit. -->\
+(set: $inspected to (a:))\
+(set: $reveal to (macro: str-type _id, str-type _label, str-type _detail, [(output:)[\
+(if: $inspected contains _id)[(print: _label + _detail)]\
+(else:)[(link-reveal: _label)[(set: $inspected to it + (a: _id))(print: _detail)]]\
+]]))\
+\
 <!-- World state -->\
 (set: $door_locked to true)\
 (set: $wall_intact to true)\

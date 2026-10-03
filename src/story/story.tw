@@ -43,7 +43,7 @@ There is a [[door->Entrance]] back to the entrance.
 (set: $thud_lvl to 1)
 A long, vaulted wine cellar. Racks of dusty casks line both walls, their labels long since rotted away. In the floor, iron rungs lead down a narrow drain shaft.
 
-Cut into the end of one rack is a vintner's mark: ''three notches beside a small flame''.
+Cut into the end of one rack is a ($reveal: "wine-mark", "vintner's mark", ": ''three notches beside a small flame''").
 
 |winespot>[(if: $wine_door_bolted)[A heavy door at the far end is bolted from this side. (link-repeat: "Draw the bolt")[(replace: ?wineresult)[(set: $wine_door_bolted to false)You draw back the stiff iron bolt with a screech.(rerun: ?winespot)]]]\
 (else:)[The heavy [[door->Entrance]] at the far end stands unbolted.]]

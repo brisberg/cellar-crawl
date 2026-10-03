@@ -1,10 +1,8 @@
 :: Inventory [noInvLink noInvDisplay] {"position":"400,0","size":"100,100"}
 (set: _items to ($carried:))\
 (if: _items's length is 0)[You are carrying nothing.]\
-(else:)[You are carrying:
-(for: each _id, ..._items)[
-* (link-repeat: ($name: _id))[(replace: ?desc)[(display: _id + "-item")]]]
-]
+(else:)[You are carrying:\
+<ul>(for: each _id, ..._items)[<li>(link-repeat: ($name: _id))[(replace: ?desc)[(display: _id + "-item")]]</li>]</ul>]
 
 |desc>[]
 

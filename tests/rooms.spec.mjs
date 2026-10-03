@@ -159,7 +159,7 @@ test.describe('Heart Chamber door', () => {
     await game.play(...TO_HEART_DOOR.slice(1)); // already at the Weighing Room
     await game.click('moon', { within: 'dial1' });
     await game.play('Back down the tunnel', 'Take the right tunnel');
-    expect((await game.state()).dials).toEqual(['wave', 'moon', 'moon']);
-    await expect(game.passage().locator('tw-hook[name="dial1"]')).toHaveText('wave');
+    expect((await game.state()).dials).toEqual(['root', 'moon', 'moon']);
+    await expect(game.passage().locator('tw-hook[name="dial1"]')).toHaveText('root');
   });
 });

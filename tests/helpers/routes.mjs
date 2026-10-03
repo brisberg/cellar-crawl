@@ -27,9 +27,9 @@ export const TO_HEART_DOOR = ['down into the dark', 'pressure plate', 'sandbag',
 
 /** Sets the dials (each starts at "moon") to wave / root / flame. */
 export async function setDials(game) {
-  await game.click('moon', { within: 'dial1' }); // -> wave
-  for (let i = 0; i < 2; i++) await game.click(i ? 'wave' : 'moon', { within: 'dial2' }); // -> root
-  for (const s of ['moon', 'wave', 'root']) await game.click(s, { within: 'dial3' }); // -> flame
+  for (const s of ['moon', 'root']) await game.click(s, { within: 'dial1' }); // -> wave
+  await game.click('moon', { within: 'dial2' }); // -> root
+  for (const s of ['moon', 'root', 'wave']) await game.click(s, { within: 'dial3' }); // -> flame
 }
 
 /** Entrance -> Heart Chamber, everything solved. */

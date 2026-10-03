@@ -47,12 +47,12 @@ The tunnel ends at a stone edifice set with a worn [wooden door]<wooden|. Dull r
      list must start at its current value, or the dials reset whenever the player returns.
      (rotated:) can't do this: it rejects a rotation of 0. -->\
 |heartdoor>[(set: _from to (dm:
-	"moon", (a: "moon", "wave", "root", "flame"),
-	"wave", (a: "wave", "root", "flame", "moon"),
-	"root", (a: "root", "flame", "moon", "wave"),
-	"flame", (a: "flame", "moon", "wave", "root"),
+	"moon", (a: "moon", "root", "wave", "flame"),
+	"root", (a: "root", "wave", "flame", "moon"),
+	"wave", (a: "wave", "flame", "moon", "root"),
+	"flame", (a: "flame", "moon", "root", "wave"),
 ))\
-(if: not $heart_door_open)[Three brass dials are set into the door, each engraved with a moon, a wave, a root, and a flame.
+(if: not $heart_door_open)[Three brass dials are set into the door, each engraved with a moon, a root, a wave, and a flame.
 
 First dial: |dial1>[(cycling-link: bind $dial1, ...(_from's ($dial1)))]
 Second dial: |dial2>[(cycling-link: bind $dial2, ...(_from's ($dial2)))]

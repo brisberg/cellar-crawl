@@ -1,0 +1,74 @@
+:: Junction
+(set: $thud_lvl to 2)
+The crawlway opens into a wide natural cavern. Water has carved the walls into smooth, rippling folds. The heartbeat is clearer here, rising from somewhere below.
+
+(display: "CurrentSoundMsg")
+
+To one side, a [[low doorway->Pump Room]] leads into a room full of pipes. Opposite it, a [[brick archway->Cistern]] smells of standing water.
+(if: $collapsing)[The crawlway behind you has collapsed into a wall of rubble.]\
+(else:)[[[Climb back up the crawlway->Crawlway3]]]
+
+
+:: Pump Room
+(set: $thud_lvl to 2)
+Rusted pipes crowd this low room, running from a great iron hand-pump into the wall toward the cistern. Water drips steadily from a cracked joint overhead.
+
+|wheelspot>[(if: $wheel_stuck)[A (link-repeat: "valve wheel")[(replace: ?wheelresult)[($useOn: "the rusted valve wheel", (dm: "hammer", "use-hammer-wheel"), "You heave at the wheel, but it is rusted solid to the pipe.")(rerun: ?wheelspot)]] is rusted onto the end of a dead pipe.]]
+|wheelresult>[]
+(if: $where's sandbag is "Pump Room")[A sandbag slumps beneath the dripping joint.]<sandbag|
+(click-replace: ?sandbag)[You heave the sandbag onto your shoulder.($move: "sandbag", "player")]
+
+Scratched into the pump housing is a mark: ''a single notch beside a wavy line''.
+
+(display: "CurrentSoundMsg")
+
+[[Back to the cavern->Junction]]
+
+
+:: use-hammer-wheel [use]
+(set: $wheel_stuck to false)($move: "valve-wheel", "player")\
+*Clang!* The rust gives way, and the valve wheel drops into your hands.
+
+
+:: Cistern
+(set: $thud_lvl to 2)
+|cisternspot>[(if: not $cistern_drained)[Black water fills this vaulted brick tank to chest height. Its surface trembles faintly with every heartbeat. An empty (link-repeat: "valve stem")[(replace: ?cisternresult)[($useOn: "the valve stem", (dm: "valve-wheel", "use-wheel-stem"), "That doesn't fit the square stem.")(rerun: ?cisternspot)]] pokes out of the wall beside the archway.]\
+(else:)[The drained tank drips and echoes. Silt coats the brick floor. A flight of stone stairs, hidden until now, leads [[down into the dark->Weighing Room]]. Above, iron rungs climb a narrow [[drain shaft->Wine Cellar]].
+
+Scratched into the floor of the tank: ''two notches beside a branching root''.]]
+|cisternresult>[]
+
+(display: "CurrentSoundMsg")
+
+[[Back to the cavern->Junction]]
+
+
+:: use-wheel-stem [use]
+($move: "valve-wheel", "gone")(set: $cistern_drained to true)\
+You fit the valve wheel onto the stem and heave. It turns with a groan, and somewhere below, a sluice opens. With a deep gurgle, the water drains away.
+
+
+:: Weighing Room
+(set: $thud_lvl to 3)
+A square chamber of fitted stone. An iron portcullis bars the passage onward, and a broad pressure plate is set into the floor before it.
+
+<!-- The portcullis is open while any item rests here (on the plate); there is no separate flag. -->\
+|platespot>[(set: _onPlate to (find: _x where $where's (_x) is "Weighing Room", ...(dm-names: $where)))\
+(if: _onPlate's length is 0)[The (link-repeat: "pressure plate")[(replace: ?plateresult)[\
+<!-- Any carried item tagged "heavy" works. -->\
+(set: _heavy to (dm:))\
+(for: each _x, ...($carried:))[(if: (passage: _x + "-item")'s tags contains "heavy")[(set: _heavy to it + (dm: _x, "use-plate"))]]\
+($useOn: "the pressure plate", _heavy, "You set it on the plate, but nothing happens. It needs something heavier.")(rerun: ?platespot)]] sits level with the floor. The portcullis is down.]\
+(else:)[The (print: ($name: _onPlate's 1st)) rests on the sunken pressure plate, and the portcullis hangs raised on its chains. (link-repeat: "Take back the " + ($name: _onPlate's 1st))[(replace: ?plateresult)[($move: _onPlate's 1st, "player")The plate rises, and the portcullis crashes down.(rerun: ?platespot)]]
+
+[[Duck under the portcullis->Echo Fork]]]]
+|plateresult>[]
+
+(display: "CurrentSoundMsg")
+
+[[Climb the stairs->Cistern]]
+
+
+:: use-plate [use]
+($move: $used_item, "Weighing Room")\
+You set the (print: ($name: $used_item)) on the plate. It sinks with a heavy ''clunk'', and the portcullis grinds upward on its chains.

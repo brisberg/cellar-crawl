@@ -15,6 +15,11 @@ Test fixtures:
 	"door_locked", $door_locked,
 	"wall_intact", $wall_intact,
 	"lantern_lit", $lantern_lit,
+	"wheel_stuck", $wheel_stuck,
+	"cistern_drained", $cistern_drained,
+	"wine_door_bolted", $wine_door_bolted,
+	"heart_door_open", $heart_door_open,
+	"dials", (a: $dial1, $dial2, $dial3),
 )))</div>
 
 

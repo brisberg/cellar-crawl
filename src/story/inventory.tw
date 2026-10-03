@@ -25,3 +25,11 @@ A solid iron sledgehammer.
 
 :: heartstone-item [item] {"position":"900,0","size":"100,100"}
 A fist-sized red gem with a low luminescence in its core. The stone is warm to the touch and pulses and jitters in your hand.
+
+
+:: valve-wheel-item [item heavy]
+A heavy cast-iron valve wheel, flaked with rust. Its square socket looks made to fit a valve stem.
+
+
+:: sandbag-item [item heavy]
+A coarse burlap sack packed tight with damp sand. It is very heavy.

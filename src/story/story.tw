@@ -7,6 +7,8 @@ The air smells stale and dusty, as if it hasn't been moved in years.
 |doorspot>[(if: $door_locked is true)[There is a (link-repeat: "door")[(replace: ?doorresult)[($useOn: "the iron lock", (dm: "rusty-key", "use-key-door"), "The door is locked and requires a key.")(rerun: ?doorspot)]] with a small, iron lock.]\
 (else:)[There is an unlocked [[door->Storeroom]].]]
 |doorresult>[]
+(if: $wine_door_bolted)[A heavy door on the far wall is bolted from the other side.]\
+(else:)[A [[heavy door->Wine Cellar]] on the far wall stands unbolted.]
 (if: ($has: "heartstone"))[[[Escape->Escape]] with the Heartstone!]
 
 
@@ -25,7 +27,8 @@ You stand in a musky Storeroom. The walls are lined with casks and barrels fille
 ]
 
 |wallspot>[(if: $wall_intact is true)[Some of the (link-repeat: "bricks")[(replace: ?wallresult)[($useOn: "the loose bricks", (dm: "hammer", "use-hammer-bricks"), "The brick wall sounds hollow, but you cannot budge it with your bare hands.")(rerun: ?wallspot)]] in the wall look loose.]\
-(else:)[The broken wall reveals a [[dark passage->Tunnel1-dark]].]]
+(else-if: $collapsing)[Rubble chokes the passage behind the broken wall. The crawlway has collapsed.]\
+(else:)[The broken wall reveals a [[dark passage->Crawlway1-dark]].]]
 |wallresult>[]
 
 There is a [[door->Entrance]] back to the entrance.
@@ -36,90 +39,20 @@ There is a [[door->Entrance]] back to the entrance.
 *Slam* Bricks fly and crumble under your hammer.
 
 
-:: Tunnel1-dark
+:: Wine Cellar
 (set: $thud_lvl to 1)
-(if: $lantern_lit is true)[(goto: "Tunnel1")]
-You crouch in a dark tunnel, unable to see your hand in front of your face.
+A long, vaulted wine cellar. Racks of dusty casks line both walls, their labels long since rotted away. In the floor, iron rungs lead down a narrow drain shaft.
+
+Cut into the end of one rack is a vintner's mark: ''three notches beside a small flame''.
+
+|winespot>[(if: $wine_door_bolted)[A heavy door at the far end is bolted from this side. (link-repeat: "Draw the bolt")[(replace: ?wineresult)[(set: $wine_door_bolted to false)You draw back the stiff iron bolt with a screech.(rerun: ?winespot)]]]\
+(else:)[The heavy [[door->Entrance]] at the far end stands unbolted.]]
+|wineresult>[]
 
 (display: "CurrentSoundMsg")
 
-(if: ($has: "lantern"))[\
-  Light your [lantern]<lantern|.
-  (click: ?lantern)[\
-    (set: $lantern_lit to true)\
-    (goto: "Tunnel1")
-  ]
-]
-[[Turn back->Storeroom]]
+[[Climb down the shaft->Cistern]]
 
-
-:: Tunnel1
-(set: $thud_lvl to 1)
-Your lantern burns brightly.
-
-The rock walls appear smooth, as if dug by flowing water pressure. The tunnel makes a turn up ahead out of sight.
-
-(display: "CurrentSoundMsg")
-
-[[Follow it.->Tunnel2]]
-(if: $where's heartstone is "Heartroom")[[[Turn back->Storeroom]]]\
-(else:)[[[Escape->Storeroom]]]
-
-
-:: Tunnel2
-(set: $thud_lvl to 2)
-It takes some time to crawl through the narrow tunnel, but you make steady progress. Your lantern sputters but remains strong.
-
-(display: "CurrentSoundMsg")
-
-[[Continue.->Tunnel3]]
-(if: $where's heartstone is "Heartroom")[[[Turn back->Tunnel1]]]\
-(else:)[[[Escape->Tunnel1]]]
-
-:: Tunnel3
-(set: $thud_lvl to 3)
-At last the tunnel widens enough for you to nearly stand. You come upon a stone edifice with a worn wooden door with a dull red light leaking under it.
-
-(click: "wooden door")[On closer inspection the door has many thin spindle patterns inlaid in the wood. It once had a \
-lacquer finish and a golden handle, but has since decayed from misuse.]
-
-(display: "CurrentSoundMsg")
-
-[[Open the door.->Heartroom]]
-(if: $where's heartstone is "Heartroom")[[[Turn back->Tunnel2]]]\
-(else:)[[[Escape->Tunnel2]]]
-
-:: Heartroom
-(set: $thud_lvl to 4)
-Behind the door is a small antechamber with rough-hewn stone covering the walls and floor. In each corner is a \
-sconce with a luminous crystal casting red light across the floor.
-
-(if: $where's heartstone is "Heartroom")[\
-  In the center is a stone pedestal with a fist-sized blood red gem. Its facets seem to shift and \
-  reverberate with the sound.
-
-  (display: "CurrentSoundMsg")
-
-  Take the Heartstone\
-]<heartstone|\
-(else:)[\
-  (display: "CurrentSoundMsg")
-]
-[[Flee->Tunnel3]]\
-
-(click: "Take the Heartstone")[\
-  <script>pushEvent('Story', 'Heartstone', 'Take')</script>\
-  ($move: "heartstone", "player")\
-  (set: $collapsing to true)(forget-undos: -1)(replace: ?sidebar)[]\
-  (replace: ?heartstone)[\
-    ---
-    The gem feels heavy, and warm in your hand. It seems to jostle and shake of its own accord.
-
-    Suddenly, the pulse quickens, slamming your mind with incessant pressure. You must leave!
-
-    (display: "CurrentSoundMsg")
-  ]\
-]
 
 :: Escape [noInvDisplay noInvLink noTick]
 <script>pushEvent('Story', 'Finish', 'Escape')</script>\

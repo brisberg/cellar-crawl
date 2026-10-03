@@ -57,6 +57,7 @@ test('key unlocks the door', async ({ game }) => {
 ```
 
 - `click(label)` matches the **full text** of a link, a `(click:)` enchantment or a dialog button, and fails unless exactly one element matches. A link that is missing or ambiguous is a test failure, not a silent no-op. If a dialog is open, only its buttons are considered.
+- `click(label, { within: 'dial1' })` limits the search to a named hook. Use it when identical labels are intentional, like the three dials.
 - Every click waits for Harlowe's transitions to finish (until no `<tw-transition-container>` remains), so there are no fixed sleeps.
 
 **Why Playwright and not the earlier hand-rolled headless Chrome script:** the script needed workarounds that made it untrustworthy.
@@ -123,12 +124,12 @@ The last row is why this step matters.
 
 - **One regression test per bug,** named or commented "Regression: …", stating what used to happen.
 - **Test files are grouped by mechanic,** not by phase: `playthrough`, `hotspots`, `collapse`, `use-dialog`, `story-graph`. New rooms get their own file (e.g. `cistern.spec.mjs`) or join the mechanic they demonstrate.
-- **Share route prefixes** as arrays (`TO_HEARTROOM`) instead of repeating long click lists. When the Phase 4 map changes the route, update one place.
+- **Share routes** through [tests/helpers/routes.mjs](../tests/helpers/routes.mjs) (`TO_STOREROOM`, `toHeartChamber()`, `ESCAPE_ROUTE`, …) instead of repeating long click lists. When the map or a link label changes, update it in one place.
 - **Click labels must be exact and unique on screen.** If two links share text, change the prose. A player can't tell them apart either.
 
 ## Known limitations
 
-- **Speed:** about 0.7 s per click, because Harlowe times its transitions in JavaScript; a CSS override was tried and had no effect. Tests run in parallel; the whole suite takes about 30 s.
+- **Speed:** about 0.7 s per click, because Harlowe times its transitions in JavaScript; a CSS override was tried and had no effect. A full playthrough is about 40 clicks, so the per-test timeout is 90 s. Tests run in parallel; the whole suite takes about 80 s.
 - **Prose coupling:** tests that assert on text break when the text is edited. That is intended for messages; for mechanics, use `state()`.
 - **The static checks use regexes.** They catch literal references, not computed ones.
 - **Manual play is still needed** for pacing, tone and whether a puzzle is fair. Tests prove the game *works*, not that it's *good*.

@@ -46,9 +46,11 @@ export class Game {
   /**
    * Clicks the link, (click:) enchantment, or dialog button whose full text is `label`.
    * If a dialog is open, only its buttons are considered. Fails unless exactly one match.
+   * `within` narrows the search to a named hook, e.g. { within: 'dial1' } for |dial1>[...].
    */
-  async click(label) {
-    const scope = (await this.dialog().count()) ? this.dialog() : this.passage();
+  async click(label, { within } = {}) {
+    let scope = (await this.dialog().count()) ? this.dialog() : this.passage();
+    if (within) scope = scope.locator(`tw-hook[name="${within}"]`);
     const target = scope.locator('tw-link, tw-enchantment').filter({ hasText: exactText(label) });
     await expect(target, `exactly one clickable "${label}"`).toHaveCount(1);
     await target.click();

@@ -1,0 +1,47 @@
+:: Crawlway1-dark
+(set: $thud_lvl to 1)
+(if: $lantern_lit is true)[(goto: "Crawlway1")]
+You crouch in a dark tunnel, unable to see your hand in front of your face.
+
+(display: "CurrentSoundMsg")
+
+(if: ($has: "lantern"))[\
+  Light your [lantern]<lantern|.
+  (click: ?lantern)[\
+    (set: $lantern_lit to true)\
+    (goto: "Crawlway1")
+  ]
+]
+[[Turn back->Storeroom]]
+
+
+:: Crawlway1
+(set: $thud_lvl to 1)
+Your lantern burns brightly.
+
+The rock walls appear smooth, as if dug by flowing water pressure. The tunnel makes a turn up ahead out of sight.
+
+(display: "CurrentSoundMsg")
+
+[[Follow it.->Crawlway2]]
+[[Turn back->Storeroom]]
+
+
+:: Crawlway2
+(set: $thud_lvl to 2)
+It takes some time to crawl through the narrow tunnel, but you make steady progress. Your lantern sputters but remains strong.
+
+(display: "CurrentSoundMsg")
+
+[[Continue.->Crawlway3]]
+[[Turn back->Crawlway1]]
+
+
+:: Crawlway3
+(set: $thud_lvl to 2)
+At last the tunnel widens enough for you to nearly stand. Ahead, the floor drops away into a broad, dark cavern.
+
+(display: "CurrentSoundMsg")
+
+[[Climb down into the cavern->Junction]]
+[[Turn back->Crawlway2]]

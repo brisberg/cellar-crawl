@@ -1,0 +1,98 @@
+:: Echo Fork
+(set: $thud_lvl to 3)
+Beyond the portcullis, the passage splits into rough-cut tunnels that all look the same. The heartbeat echoes off every surface.
+
+(display: "CurrentSoundMsg")
+
+(if: ($has: "heartstone"))[The Heartstone glows brightest when you face the portcullis.]\
+(else:)[From the left tunnel, the beat comes softly, smothered by stone. From the right tunnel, it rings sharp and close.]
+
+[[Take the left tunnel->Echo Bend]]
+[[Take the right tunnel->Echo Door]]
+[[Back under the portcullis->Weighing Room]]
+
+
+:: Echo Bend
+(set: $thud_lvl to 2)
+The tunnel bends and narrows. The heartbeat is quieter here.
+
+(display: "CurrentSoundMsg")
+
+(if: ($has: "heartstone"))[The Heartstone dims in your hand. This is the wrong way.]\
+(else:)[Ahead, the beat fades further still.]
+
+[[Press on->Echo Hollow]]
+[[Go back->Echo Fork]]
+
+
+:: Echo Hollow
+(set: $thud_lvl to 1)
+A low, dead-end hollow. The heartbeat is barely a murmur. A crack in the far wall curls back the way you came.
+
+(display: "CurrentSoundMsg")
+
+[[Squeeze through the crack->Echo Fork]]
+[[Go back->Echo Bend]]
+
+
+:: Echo Door
+(set: $thud_lvl to 4)
+The tunnel ends at a stone edifice set with a worn [wooden door]<wooden|. Dull red light leaks from beneath it.
+(click: ?wooden)[On closer inspection, the door has many thin spindle patterns inlaid in the wood. It once had a lacquer finish and a golden handle, but has since decayed from misuse.]
+
+(display: "CurrentSoundMsg")
+
+(if: ($has: "heartstone"))[The Heartstone flares when you face the tunnel behind you.]
+<!-- (cycling-link: bind) resets the variable to its first string on every render, so each dial's
+     list must start at its current value, or the dials reset whenever the player returns.
+     (rotated:) can't do this: it rejects a rotation of 0. -->\
+|heartdoor>[(set: _from to (dm:
+	"moon", (a: "moon", "wave", "root", "flame"),
+	"wave", (a: "wave", "root", "flame", "moon"),
+	"root", (a: "root", "flame", "moon", "wave"),
+	"flame", (a: "flame", "moon", "wave", "root"),
+))\
+(if: not $heart_door_open)[Three brass dials are set into the door, each engraved with a moon, a wave, a root, and a flame.
+
+First dial: |dial1>[(cycling-link: bind $dial1, ...(_from's ($dial1)))]
+Second dial: |dial2>[(cycling-link: bind $dial2, ...(_from's ($dial2)))]
+Third dial: |dial3>[(cycling-link: bind $dial3, ...(_from's ($dial3)))]
+
+(link-repeat: "Push the door")[(replace: ?heartdoorresult)[(if: $dial1 is "wave" and $dial2 is "root" and $dial3 is "flame")[(set: $heart_door_open to true)The dials click into place, and the door swings inward.](else:)[The door holds fast.](rerun: ?heartdoor)]]]\
+(else:)[The wooden door stands open. [[Open the door.->Heart Chamber]]]]
+|heartdoorresult>[]
+
+[[Back down the tunnel->Echo Fork]]
+
+
+:: Heart Chamber
+(set: $thud_lvl to 4)
+Behind the door is a small antechamber with rough-hewn stone covering the walls and floor. In each corner is a \
+sconce with a luminous crystal casting red light across the floor.
+
+(if: $where's heartstone is "Heart Chamber")[\
+  In the center is a stone pedestal with a fist-sized blood red gem. Its facets seem to shift and \
+  reverberate with the sound.
+
+  (display: "CurrentSoundMsg")
+
+  Take the Heartstone\
+]<heartstone|\
+(else:)[\
+  (display: "CurrentSoundMsg")
+]
+[[Flee->Echo Door]]\
+
+(click: "Take the Heartstone")[\
+  <script>pushEvent('Story', 'Heartstone', 'Take')</script>\
+  ($move: "heartstone", "player")\
+  (set: $collapsing to true)(forget-undos: -1)(replace: ?sidebar)[]\
+  (replace: ?heartstone)[\
+    ---
+    The gem feels heavy, and warm in your hand. It seems to jostle and shake of its own accord.
+
+    Suddenly, the pulse quickens, slamming your mind with incessant pressure. Somewhere far behind you, the crawlway collapses with a roar. You must leave!
+
+    (display: "CurrentSoundMsg")
+  ]\
+]

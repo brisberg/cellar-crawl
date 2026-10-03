@@ -1,4 +1,4 @@
 :: CurrentSoundMsg
 <!-- Print current sound level message -->\
-(if: $where's heartstone is "Heartroom")[(print: $sound_msgs's ($thud_lvl + 1))]\
+(if: $where's heartstone is "Heart Chamber")[(print: $sound_msgs's ($thud_lvl + 1))]\
 (else:)[(print: $panic_msgs's ($thud_lvl))]

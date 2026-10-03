@@ -8,7 +8,9 @@
 	"lantern", "player",
 	"rusty-key", "player",
 	"hammer", "Storeroom",
-	"heartstone", "Heartroom",
+	"valve-wheel", "Pump Room",
+	"sandbag", "Pump Room",
+	"heartstone", "Heart Chamber",
 ))\
 \
 <!-- Item helpers -->\
@@ -21,6 +23,7 @@
 <!-- ($useOn: target, outcomes, [fallback]) -->\
 <!-- Opens a dialog listing carried items. outcomes maps item ID -> passage to (display:) when that item is chosen. -->\
 <!-- Any other item prints the fallback message, or "Nothing happens." Cancel prints nothing. -->\
+<!-- Before an outcome passage is displayed, $used_item holds the chosen item ID, so one passage can serve several items. -->\
 <!-- Note: a blocking (dialog:) breaks (else:) chains around it, so use separate (if:)s, not (if:)/(else:). -->\
 (set: $useOn to (macro: str-type _target, dm-type _outcomes, ...str-type _fallback, [(output:)[\
 (set: _items to ($carried:))\
@@ -30,13 +33,23 @@
 (dialog: bind _choice, "Use what on " + _target + "?", ...(altered: _x via ($name: _x), ..._items), "Cancel")\
 (unless: _choice is "Cancel")[\
 (set: _id to (find: _x where ($name: _x) is _choice, ..._items)'s 1st)\
-(if: _outcomes contains _id)[(display: _outcomes's (_id))]\
+(if: _outcomes contains _id)[(set: $used_item to _id)(display: _outcomes's (_id))]\
 (else-if: _fallback's length > 0)[(print: _fallback's 1st)]\
 (else:)[Nothing happens.]\
 ]]]]))\
 \
+(set: $used_item to "")\
+\
+<!-- World state -->\
 (set: $door_locked to true)\
 (set: $wall_intact to true)\
+(set: $wheel_stuck to true)\
+(set: $cistern_drained to false)\
+(set: $wine_door_bolted to true)\
+(set: $heart_door_open to false)\
+(set: $dial1 to "moon")\
+(set: $dial2 to "moon")\
+(set: $dial3 to "moon")\
 (set: $lantern_lit to false)\
 (set: $thud_lvl to 1)\
 \
@@ -49,7 +62,7 @@
 (set: $sound_msgs to (a:
 	"",
 	"You feel slight tremors in the rock beneath your feet.",
-	"There is a faint, but deep throbbing sound coming from up ahead.",
+	"A faint but deep throbbing sound reaches you through the rock.",
 	"The throbbing sound comes from the rock all around you, permeating your thoughts.",
 	"*Bu-dum* *Bu-dum*. The walls themselves scream at you with a deafening cacophony.",
 ))\

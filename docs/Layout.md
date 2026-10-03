@@ -1,6 +1,6 @@
 # Dark Cellar — Room Layout
 
-Proposed layout for the expanded game: 10 rooms, 5 puzzles, and a timed escape once the Heartstone is taken. See [IMPLEMENTATION_PLAN.md](../IMPLEMENTATION_PLAN.md) for the build order and the systems these rooms depend on.
+Layout for the expanded game: 10 rooms, 5 puzzles, and a timed escape once the Heartstone is taken. Built in phase 4; notes marked **Built:** record decisions made during implementation. See [IMPLEMENTATION_PLAN.md](../IMPLEMENTATION_PLAN.md) for the build order and the systems these rooms depend on.
 
 ## Design goals
 
@@ -70,6 +70,7 @@ The long, narrow descent. Keep it as three passages so it is genuinely slow (3 m
 - **Mechanic:** existing `$thud_lvl` sound messages build tension on the way down.
 - **Collapse:** caves in the moment the Heartstone is taken. Arriving at the Junction end afterwards shows rubble. This removes the long route, so the shortcut is the only way out.
 - **Change from current:** keep `Tunnel1-dark`, the lantern-lighting beat. The Tunnel3 door scene moves to the Heart Chamber door (room 10).
+- **Built:** passages `Crawlway1-dark`, `Crawlway1`–`3`. The rubble shows at both ends: the Junction and behind the Storeroom's broken wall.
 
 ### 4. Junction — *new, hub*
 
@@ -118,12 +119,15 @@ A square chamber with a stone pressure plate set into the floor. A portcullis bl
 
 A knot of identical, rough-cut passages, about 4 passages with 2–3 exits each.
 
+**Built:** `Echo Fork` (left / right / back) → right → `Echo Door` (the dial door, the end of the maze). The left goes to `Echo Bend` → `Echo Hollow`, whose crack loops back to the Fork, so a wrong turn costs 2–3 moves. Each passage sets `$thud_lvl` (Fork 3, Door 4, Bend 2, Hollow 1), and the Fork describes which tunnel sounds louder.
+
 - **Puzzle — heartbeat navigation:** room text is driven by `$thud_lvl`. Choices that get louder lead toward the Heart Chamber; choices that get quieter loop back. This reuses the existing sound system rather than adding a new one.
 - **On the way out:** the Heartstone glows brighter toward the exit, so the escape through the maze is readable but still costs moves if the player rushes.
 
 ### 10. Heart Chamber — *exists as Heartroom*
 
-- **Door puzzle — dials:** the decayed wooden door with spindle inlay (existing Tunnel3 text) now holds three symbol dials, built with `(cycling-link: bind ...)`. The correct symbols come from the clues in rooms 5, 6, and 7. Symbol set and combination are TBD.
+- **Door puzzle — dials:** the decayed wooden door with spindle inlay (existing Tunnel3 text) now holds three symbol dials, built with `(cycling-link: bind ...)`. The correct symbols come from the clues in rooms 5, 6, and 7.
+- **Built:** the door and dials are in the `Echo Door` passage, so entering the chamber isn't an extra move. The symbols are moon, wave, root and flame. The clues give the dial number as notches: Pump Room "a single notch beside a wavy line" → wave; Cistern "two notches beside a branching root" → root; Wine Cellar "three notches beside a small flame" → flame. A wrong combination gives "The door holds fast." Dial settings persist between visits.
 - **Taking the Heartstone:** starts the collapse (see below).
 - **Change from current:** existing chamber text and take-sequence carry over.
 
@@ -151,13 +155,15 @@ A knot of identical, rough-cut passages, about 4 passages with 2–3 exits each.
 7. Echo Maze → dial door (clues 1–3) → Heart Chamber: take the Heartstone.
 8. Escape: Maze → Weighing Room → Cistern → shaft → Wine Cellar (bolt) → Entrance → ladder.
 
+The exact click sequences live in [tests/helpers/routes.mjs](../tests/helpers/routes.mjs).
+
 ## The collapse
 
 Taking the Heartstone starts the collapse. Each passage visited afterwards costs one of `$moves_left`, shown with `(meter:)`. Undo is disabled for the rest of the game. The Inventory and the final ladder climb (Escape) are free. Implemented in phase 3; see [collapse.tw](../src/story/collapse.tw).
 
 | Route out (moves from Heart Chamber to the ladder) | Moves |
 |---|---|
-| Shortcut, perfect maze | 6 — Maze ×2, Weighing, Cistern, Wine Cellar, Entrance (Escape is free) |
+| Shortcut, perfect maze | 6 — Echo Door, Echo Fork, Weighing, Cistern, Wine Cellar, Entrance (Escape is free) |
 | Long route via Crawlway | 10, and blocked anyway by the cave-in |
 
 - **Budget: 10 moves** (`$collapse_budget`). That allows about 4 wrong turns in the maze or detours. Tune this during playtesting. Note that the long route fits exactly within 10, so the cave-in is what actually blocks it.

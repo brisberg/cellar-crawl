@@ -141,22 +141,30 @@ A hotspot opens a `(dialog:)` that lists carried items. The hotspot supplies a d
 
 ## Phase 4 — Rooms
 
-Build in critical-path order, so the game is playable end-to-end after each step. Details for each room are in [docs/Layout.md](docs/Layout.md).
+Built in critical-path order. Room details are in [docs/Layout.md](docs/Layout.md). Source by area: [story.tw](src/story/story.tw) (Entrance, Storeroom, Wine Cellar, Escape), [crawlway.tw](src/story/crawlway.tw), [lower.tw](src/story/lower.tw) (Junction, Pump Room, Cistern, Weighing Room), [maze.tw](src/story/maze.tw) (Echo Maze, Heart Chamber).
 
-- [ ] **Crawlway**: rename Tunnel1–3 and move the dial-door text out of Tunnel3. Add the cave-in variant for when `$collapsing` is true.
-- [ ] **Junction**: hub links only (storylets come in phase 5).
-- [ ] **Pump Room**: stuck valve wheel (`$useOn` with hammer), sandbag, clue #1.
-- [ ] **Cistern**: flooded and drained variants, `$useOn` with the valve wheel, clue #2, two new exits.
-- [ ] **Wine Cellar**: drain-shaft entry, bolt (`$wine_door_bolted`), clue #3. Add the bolted-door text to Entrance.
-- [ ] **Weighing Room**: plate via `$useOn`, where any `heavy` item is accepted. The placed item goes to `$where` = `"Weighing Room"` and can be picked back up, which closes the portcullis.
-- [ ] **Echo Maze**: about 4 passages. Choose a sound level per passage. Add the Heartstone-glow variant for the way out.
-- [ ] **Heart Chamber door**: three `(cycling-link: bind ...)` dials. Pick a symbol set and combination, then write clues 1–3 to match.
-- [ ] **Heart Chamber**: hook the take-sequence into phase 3.
+- [x] **Crawlway**: Tunnel1–3 renamed to Crawlway1–3 (plus `Crawlway1-dark`). The door scene moved to Echo Door. The cave-in shows at both ends while `$collapsing`.
+- [x] **Junction**: hub links only (storylets come in phase 5).
+- [x] **Pump Room**: stuck valve wheel (`$useOn` with hammer), sandbag, clue #1.
+- [x] **Cistern**: flooded and drained variants, `$useOn` with the valve wheel, clue #2, two new exits.
+- [x] **Wine Cellar**: drain-shaft entry, bolt (`$wine_door_bolted`), clue #3. Bolted and unbolted door text at the Entrance.
+- [x] **Weighing Room**: any carried `heavy` item works on the plate. The portcullis state is derived from "is any item in this room", not stored. The item can be taken back.
+- [x] **Echo Maze**: Echo Fork, Echo Bend, Echo Hollow (the wrong-way loop) and Echo Door. Heartstone-glow text on the way out.
+- [x] **Heart Chamber door**: three `(cycling-link: bind ...)` dials in Echo Door. Symbols moon / wave / root / flame; combination wave, root, flame.
+- [x] **Heart Chamber** (was Heartroom): the take-sequence is unchanged and still starts the collapse.
+
+### Findings
+
+- **`(cycling-link: bind)` resets its variable to the first string on every render.** The dials reset whenever the player left and came back. Each dial's option list now starts at its current value, from a lookup table. `(rotated:)` can't do this: it rejects a rotation of 0.
+- **`$useOn` now sets `$used_item`** before displaying an outcome passage, so one passage (`use-plate`) can serve every heavy item.
+- **Link labels must be unique per screen** (a test helper rule, and a player one). This is why the Entrance has "door" (Storeroom) and "heavy door" (Wine Cellar).
+- **Playwright's 30 s default timeout is too short** for full playthroughs (about 40 clicks at about 0.7 s each). Raised to 90 s.
 
 ### Done when
 
-- A full playthrough of the critical path in Layout.md wins.
-- Every soft-lock check in Layout.md has been tried and holds.
+- [x] A full playthrough of the critical path in Layout.md wins ([playthrough.spec.mjs](tests/playthrough.spec.mjs)).
+- [x] Every soft-lock check in Layout.md has been tried and holds. Wheel: consumed only at the Cistern. Bolt: drawable during the escape. Plate: hammer and sandbag both work, and the item can be retrieved. See [rooms.spec.mjs](tests/rooms.spec.mjs) and [collapse.spec.mjs](tests/collapse.spec.mjs).
+- [x] 29 tests pass. Five new mechanics were broken on purpose and each was caught.
 
 ## Phase 5 — Extras
 

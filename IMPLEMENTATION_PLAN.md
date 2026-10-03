@@ -10,9 +10,20 @@ Room-by-room design: [docs/Layout.md](docs/Layout.md).
 
 ## Phase 0 — Housekeeping
 
-- [ ] Update the README: it still says Twine 2.3.7 and "string based" inventory.
-- [ ] Confirm the Spindle build uses the vendored `storyformats/harlowe-3.3.9`. Several features below are 3.2+ or 3.3+ only.
-- [ ] Before using each macro named in this plan, check it against the Harlowe 3.3.9 manual. The names here are from memory and need verification.
+- [x] Update the README version line (Twine 2.3.7 → Tweego/Spindle build). The "string based" inventory line stays until phase 1 replaces it.
+- [x] Confirm the Spindle build uses the vendored `storyformats/harlowe-3.3.9`. `tweego --list-formats` shows only `harlowe-3.3.9` (nothing is installed next to the binary), and the built HTML has `format-version="3.3.9"`.
+- [x] Check every macro named in this plan against the Harlowe 3.3.9 source. All of them exist: `macro`, `output`, `output-data`, `dialog`, `meter`, `forget-undos`, `cycling-link`, `save-game`, `load-game`, `storylet`, `open-storylets`, `for`, `link`, `str-replaced`, `dm-names`, `find`, `after`.
+
+### Phase 0 findings
+
+Prototype tested in headless Chrome against Harlowe 3.3.9:
+
+- **Custom macros can mutate globals.** `(macro: str-type _id, str-type _loc, [(output:)[(set: $where's (_id) to _loc)]])` works, and the change persists across a `(goto:)` into a new turn. This resolves the main phase 1 risk; no `(display:)` fallback is needed.
+- **Query helpers work:** `(output-data: (find: _x where $where's (_x) is "player", ...(dm-names: $where)))` returns the carried IDs.
+- **Tags as static properties work:** `(passage: "hammer-item")'s tags contains "heavy"` → `true`.
+- **Display names work:** `(str-replaced: "-", " ", "rusty-key")` → `rusty key`.
+- **Ordering:** `(dm-names:)` returns IDs alphabetically, so the inventory lists in alphabetical order, not pickup order. That is acceptable; track pickup order separately only if it matters.
+- **Testing note:** `(after:)` timers don't fire under headless Chrome's `--virtual-time-budget`. Automated smoke tests should chain passages with `(goto:)` instead.
 
 ## Phase 1 — Item location model
 
@@ -46,7 +57,7 @@ Room-by-room design: [docs/Layout.md](docs/Layout.md).
   - `$carried`: returns the array of IDs whose location is `"player"`.
   - `$has`: `(has: "hammer")` → boolean.
   - `$move`: sets an item's location (pick up, drop, place, consume = `"gone"`).
-  - Verify that a custom macro can perform `(set:)` via `(output:)`. If it can't, fall back to `(display:)`-ing small helper passages.
+  - Verified in phase 0: custom macros can perform `(set:)` via `(output:)`.
 - [ ] Rebuild the [Inventory](src/story/inventory.tw) passage with `(for: each _id, ...$carried)` and `(link:)` per item, showing the item's description passage. Remove the hardcoded `(click:)` lines.
 - [ ] Rebuild the [Footer](src/story/footer.tw) list from `$carried` using display names.
 - [ ] Migrate the existing passages: replace `$storeroom_hammer`, `$heartstone`, and every `$inv contains` check.
@@ -149,7 +160,7 @@ There are no automated tests. Before merging each phase, run this manual checkli
 
 ## Risks
 
-- **Custom macro side effects:** if `(macro:)` can't cleanly run `(set:)`, the helpers in phases 1–2 become `(display:)`-based passages. That is uglier but works. Find out in phase 1 before building on it.
+- ~~**Custom macro side effects**~~: resolved in phase 0. `(output:)` hooks can `(set:)` globals.
 - **Undo exploits:** Harlowe's undo can resurrect consumed items or reset the timer. `(forget-undos:)` covers the theft; decide whether consuming items should also forget undos.
 - **Maze tedium:** sound-based navigation is easy to make annoying. Keep it to about 4 passages and make the louder/quieter difference obvious.
 - **Collapse budget:** too tight feels unfair, too loose feels fake. Playtest; don't guess.

@@ -174,14 +174,13 @@ Build in critical-path order, so the game is playable end-to-end after each step
 
 ## Testing
 
-There are no automated tests. Before merging each phase, run this manual checklist:
+Run `npm test` before merging each phase. It builds the game and runs the Playwright suite in `tests/`. See [docs/Testing.md](docs/Testing.md) for the approach and how to write tests.
 
-1. Build with `npm run build` and play from a fresh start.
-2. Play the critical path to a win.
-3. Try each wrong item on each hotspot.
-4. Try each soft-lock scenario listed in Layout.md.
-5. Collapse: win with a perfect route; lose by dawdling.
-6. Use undo and back at key points: after consuming an item, after the theft.
+For each phase:
+
+1. Add a scripted playthrough for each new room or mechanic, and a regression test for every bug found.
+2. Check that each new test fails when its feature is broken (see "Prove the test can fail" in Testing.md).
+3. Keep a short manual pass in a real browser. Prose, pacing and feel aren't covered by tests.
 
 ## Risks
 

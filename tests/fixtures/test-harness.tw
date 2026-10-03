@@ -1,0 +1,30 @@
+:: TestRouter [noTick noInvDisplay noInvLink]
+<!-- Start passage of the test build only (tweego -s TestRouter). Tests click through to a fixture or the real game. -->\
+Test fixtures:
+[[Entrance]]
+[[Fixture-UseOn]]
+
+
+:: TestStateProbe [footer]
+<!-- Test build only: exposes game state to tests as Harlowe source in a hidden element. Updated on each passage render. -->\
+<div id="test-state" hidden>(verbatim-print: (source: (dm:
+	"where", $where,
+	"moves_left", $moves_left,
+	"collapsing", $collapsing,
+	"free_return", $free_return,
+	"door_locked", $door_locked,
+	"wall_intact", $wall_intact,
+	"lantern_lit", $lantern_lit,
+)))</div>
+
+
+:: Fixture-UseOn [noTick]
+<!-- ($useOn:) with 0, 1, and 7 carried items. Sets $where directly, so the footer list is not refreshed. -->\
+(link-repeat: "zero")[(replace: ?r)[(set: $where to (dm:))($useOn: "the zero test", (dm:))]]
+(link-repeat: "one")[(replace: ?r)[(set: $where to (dm: "lantern", "player"))($useOn: "the one test", (dm: "lantern", "Fixture-UseOn-ok"))]]
+(link-repeat: "many")[(replace: ?r)[(set: $where to (dm: "lantern", "player", "rusty-key", "player", "hammer", "player", "heartstone", "player", "valve-wheel", "player", "sandbag", "player", "a-very-long-item-name", "player"))($useOn: "the many test", (dm:))]]
+|r>[]
+
+
+:: Fixture-UseOn-ok
+OK-OUTCOME

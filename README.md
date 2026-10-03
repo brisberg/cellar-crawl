@@ -16,6 +16,10 @@ Built with [Tweego](https://www.motoslave.net/tweego/) via [Spindle](https://git
 - Startup, Footer passages
 - Simple Google Analytics with Custom Events
 
+### Testing
+
+`npm test` builds the game and runs the Playwright suite. First run only: `npx playwright install chromium`. See [docs/Testing.md](docs/Testing.md).
+
 ### Tutorials
 [Simple Inventory in Twine2](https://gersande.com/blog/designing-inventories-in-twine-2-with-the-built-in-harlowe-macros/#1)
 [Locked doors](https://www.youtube.com/watch?v=C_Mmv6vQajM)

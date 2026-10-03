@@ -25,3 +25,14 @@ tw-meter {
   border: 1px solid #8b1a1a;
   padding: 0 0.5em;
 }
+
+/* Heart Chamber dials: tapped repeatedly and stacked, so give them button-sized targets (>= 40px tall). */
+tw-hook[name^="dial"] tw-link {
+  display: inline-block;
+  min-width: 5em;
+  padding: 0.35em 0.75em;
+  margin: 0.2em 0;
+  border: 1px solid currentColor;
+  border-radius: 0.5em;
+  text-align: center;
+}

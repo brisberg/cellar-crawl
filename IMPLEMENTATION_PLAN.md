@@ -185,9 +185,15 @@ Built in critical-path order. Room details are in [docs/Layout.md](docs/Layout.m
 
 ## Phase 6 — Wrap-up
 
-- [ ] Update the README Features list to match what the game now demonstrates.
-- [ ] Tune the collapse budget from playtesting.
-- [ ] Mobile pass: Inventory, dialog, meter, and dials at narrow width.
+- [x] Update the README: a table of each mechanic, the Harlowe features it uses, and where it lives.
+- [x] **Collapse budget kept at 10.** Not playtested by a human. Instead, the difficulty is pinned by tests ([collapse.spec.mjs](tests/collapse.spec.mjs)): a perfect escape costs 6; the worst single mistake (the long maze detour, +3) is survivable with 1 move left; that plus a detour to the Junction (+2) buries you. "One mistake forgiven, two not." If playtesting says otherwise, change `$collapse_budget` and the tests show the new difficulty. The collapse-message thresholds in `CollapseStatus` assume a budget of 10.
+- [x] **Mobile pass** at 375 px ([mobile.spec.mjs](tests/mobile.spec.mjs)). There is no horizontal scrolling on any screen along the critical path, and the inventory, dialog, meter and dials were reviewed in screenshots. The dial links were 27 px tall and stacked tightly, so they are now bordered, button-sized targets (≥ 40 px), enforced by a test.
+
+### Open issues (not fixed)
+
+- **Use-item messages render below the redrawn hotspot.** For example, in the Weighing Room "You set the sandbag on the plate…" appears after the "Duck under the portcullis" link. Moving each `|…result>[]` hook above its hotspot hook would fix it.
+- **The collapse-message thresholds are hard-coded** for a budget of 10.
+- **The README title says 1.0.0,** but `package.json` says 0.1.0.
 
 ---
 

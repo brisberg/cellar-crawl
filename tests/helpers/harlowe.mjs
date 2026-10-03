@@ -20,6 +20,8 @@ export class Game {
   constructor(page) {
     this.page = page;
     this.jsErrors = [];
+    /** Optional async (label) => void, run after every click settles. For per-step checks. */
+    this.afterClick = null;
   }
 
   /** Loads a build and waits for the first passage. Defaults to the test build (starts at TestRouter). */
@@ -64,6 +66,7 @@ export class Game {
     await expect(target, `exactly one clickable "${label}"`).toHaveCount(1);
     await target.click();
     await this.settle();
+    if (this.afterClick) await this.afterClick(label);
   }
 
   async play(...labels) {

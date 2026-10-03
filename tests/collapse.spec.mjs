@@ -79,3 +79,26 @@ test('dawdling ends in Buried, which stays put', async ({ game }) => {
   // enforces this after every test; asserting here too makes the intent explicit.
   expect(await game.rendersWhileIdle()).toBe(0);
 });
+
+// Budget tuning (docs/Layout.md, The collapse): with $collapse_budget = 10 and a 6-move perfect
+// escape, the worst single mistake is forgiven and two mistakes are not. If you change the budget
+// or the map, these tests tell you what difficulty you've changed to.
+const MAZE_DETOUR = ['Take the left tunnel', 'Press on', 'Squeeze through the crack']; // +3, worst wrong turn
+const JUNCTION_DETOUR = ['Back to the cavern', 'brick archway']; // +2
+
+test('budget: the worst single mistake is survivable', async ({ game }) => {
+  await game.start();
+  await toHeartChamber(game);
+  await game.play('Take the Heartstone', 'Flee', 'Back down the tunnel', ...MAZE_DETOUR, ...ESCAPE_ROUTE.slice(2));
+  expect(await movesLeft(game)).toBe(1);
+  await game.click('Escape');
+  expect(await game.text()).toContain('You Win!');
+});
+
+test('budget: two mistakes bury you', async ({ game }) => {
+  await game.start();
+  await toHeartChamber(game);
+  await game.play('Take the Heartstone', 'Flee', 'Back down the tunnel', ...MAZE_DETOUR,
+    'Back under the portcullis', 'Climb the stairs', ...JUNCTION_DETOUR, 'drain shaft', 'door');
+  expect(await game.text()).toContain('The Dark Cellar has claimed you.');
+});

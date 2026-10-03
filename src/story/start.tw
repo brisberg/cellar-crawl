@@ -1,4 +1,5 @@
 :: Startup [startup] {"position":"25,0","size":"100,100"}
+{
 <!-- Set up Initial Variables -->\
 <script>pushEvent('Story', 'Start', '');</script>\
 \
@@ -82,3 +83,4 @@
 	"Panicked thudding echoes and shakes the tunnel behind you.",
 	"*Bu-dum-dum* *Bu-dum-dum*. The rising thrumming shakes the walls, which shower you in gravel in protest.",
 ))
+}

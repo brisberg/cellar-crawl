@@ -18,3 +18,10 @@ tw-dialog-links tw-link {
     padding: 1em;
   }
 }
+
+/* Collapse meter: show the empty track, keep the label off the border. */
+tw-meter {
+  box-sizing: border-box;
+  border: 1px solid #8b1a1a;
+  padding: 0 0.5em;
+}

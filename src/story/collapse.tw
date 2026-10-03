@@ -1,0 +1,30 @@
+:: CollapseTick [header]
+<!-- While the cellar collapses, every passage visit costs one move and undo is disabled. -->\
+<!-- noTick passages are free, and so is the visit right after one (the Inventory's Return link). -->\
+(if: (passage:)'s tags contains "noTick")[]\
+(else-if: $free_return)[(set: $free_return to false)]\
+<!-- The Buried check lives inside the tick branch: Buried is noTick, so it can't redirect to itself in a loop. -->\
+(else-if: $collapsing)[(set: $moves_left to it - 1)(if: $moves_left < 0)[(goto: "Buried")]]\
+<!-- No undoing out of the collapse. The sidebar is drawn before this header runs, so hide its now-dead undo icon. -->\
+(if: $collapsing)[(forget-undos: -1)(replace: ?sidebar)[]]\
+(if: $collapsing and not ((passage:)'s tags contains "noTick"))[(display: "CollapseStatus")]
+
+
+:: CollapseStatus
+<!-- A sizing line (must contain "=") starting at the left edge makes the meter fill from the left; a centred one fills from the middle. -->\
+(meter: bind $moves_left, $collapse_budget, "XXXXXXXXXXXXXXXXXXX=", "Moves left: " + (str: $moves_left), #8b1a1a)
+(if: $moves_left >= 8)[''Dust trickles from the ceiling. The cellar is starting to give way.'']\
+(else-if: $moves_left >= 5)[''Beams groan overhead, and cracks race across the stone.'']\
+(else-if: $moves_left >= 2)[''Chunks of rock crash down around you. Hurry!'']\
+(else-if: $moves_left is 1)[''The ceiling sags above you. You don't have long.'']\
+(else:)[''The roof is coming down! Get out now, or you're buried.'']
+---
+
+
+:: Buried [noTick noInvDisplay noInvLink]
+<script>pushEvent('Story', 'Finish', 'Buried')</script>\
+With a final, deafening *crack*, the ceiling gives way. Stone and earth pour down around you, and the Heartstone's red glow fades beneath the rubble.
+
+The Dark Cellar has claimed you.
+
+(link: "Try again")[(restart:)]

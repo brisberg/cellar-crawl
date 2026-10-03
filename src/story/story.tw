@@ -110,6 +110,7 @@ sconce with a luminous crystal casting red light across the floor.
 (click: "Take the Heartstone")[\
   <script>pushEvent('Story', 'Heartstone', 'Take')</script>\
   ($move: "heartstone", "player")\
+  (set: $collapsing to true)(forget-undos: -1)(replace: ?sidebar)[]\
   (replace: ?heartstone)[\
     ---
     The gem feels heavy, and warm in your hand. It seems to jostle and shake of its own accord.
@@ -120,7 +121,7 @@ sconce with a luminous crystal casting red light across the floor.
   ]\
 ]
 
-:: Escape [noInvDisplay noInvLink]
+:: Escape [noInvDisplay noInvLink noTick]
 <script>pushEvent('Story', 'Finish', 'Escape')</script>\
 You climb out into the night air and run swiftly from the rickety house, still swaying in the wind like a dying animal.
 

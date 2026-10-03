@@ -40,6 +40,12 @@
 (set: $lantern_lit to false)\
 (set: $thud_lvl to 1)\
 \
+<!-- Collapse timer: starts when the Heartstone is taken. See CollapseTick. -->\
+(set: $collapsing to false)\
+(set: $collapse_budget to 10)\
+(set: $moves_left to $collapse_budget)\
+(set: $free_return to false)\
+\
 (set: $sound_msgs to (a:
 	"",
 	"You feel slight tremors in the rock beneath your feet.",

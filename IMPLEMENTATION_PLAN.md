@@ -115,22 +115,29 @@ A hotspot opens a `(dialog:)` that lists carried items. The hotspot supplies a d
 
 ### Design
 
-- When the Heartstone is taken: set `$collapse` to 0, set `$collapsing` to true, and run `(forget-undos:)`.
-- A `header`-tagged passage increments `$collapse` on each passage visit while `$collapsing`. Exclude the Inventory passage and dialogs with a `noTick` tag, so checking your bag doesn't cost a move.
-- Show `(meter:)` for the remaining budget.
-- At the budget (start at 10), `(goto: "Buried")`, a failure ending with a restart or load link.
-- Collapse prose at thresholds via a `CurrentCollapseMsg` passage, mirroring [sound.tw](src/story/sound.tw).
+- Taking the Heartstone sets `$collapsing` to true, runs `(forget-undos: -1)`, and hides the sidebar.
+- The `CollapseTick` header ([collapse.tw](src/story/collapse.tw)) subtracts 1 from `$moves_left` on each passage visit while `$collapsing` is true. When `$moves_left` drops below 0, it does `(goto: "Buried")`. The budget is `$collapse_budget` (10) in Startup.
+- **Free passages:** anything tagged `noTick` (Inventory, Escape, Buried), plus the visit right after the Inventory (its Return link). The Inventory sets `$free_return` for this. Without it, checking your bag would cost a move.
+- **No undo during the collapse:** the header runs `(forget-undos: -1)` and `(replace: ?sidebar)[]` on *every* passage while collapsing, including `noTick` ones. The sidebar is drawn before the header runs, so without hiding it the ↶ icon stays visible but does nothing.
+- `CollapseStatus` shows a `(meter:)` bound to `$moves_left`, plus escalating prose by moves left (≥8, ≥5, ≥2, 1, 0).
 
 ### Tasks
 
-- [ ] Header passage with tick logic and the `noTick` exclusion.
-- [ ] `Buried` ending passage.
-- [ ] Meter display; check how it looks on mobile.
-- [ ] Verify `(forget-undos:)` actually blocks the browser back/undo button in Harlowe 3.3.9.
+- [x] Header passage with tick logic and the `noTick` exclusion.
+- [x] `Buried` ending passage with a restart link.
+- [x] Meter display, checked at desktop width and in a 375 px phone viewport.
+- [x] Verify that `(forget-undos:)` blocks undo. It does: clicking ↶ after the theft does nothing, and the icon is now hidden. Harlowe doesn't hook the browser's back button, so there is nothing to block there.
+
+### Findings
+
+- `(forget-undos:)` requires a number argument; `-1` forgets every earlier turn.
+- The `(meter:)` sizing line must contain `=`. A line starting at the left edge (`"XXXX="`) fills from the left; a centred line (`"=XX="`) fills from the middle outward. The meter has no visible track by default, so [style.tw](src/story/style.tw) adds a border.
+- **A header that `(goto:)`s must not fire on its own target.** The first version checked `$moves_left < 0` on every passage, including `Buried`, so `Buried` redirected to itself forever. A real browser showed a black screen. The headless harness missed it until a settle check was added (it counts passage renders over 3 s of idle time and flags any non-zero count). The redirect now lives inside the tick branch, which `noTick` passages skip.
+- The meter label is computed when the passage renders. That is fine here, because the value only changes between passages.
 
 ### Done when
 
-- On the current small map, taking the stone and dawdling ends in `Buried`. Walking straight out wins.
+- [x] On the current map, dawdling (back and forth between Tunnel3 and Heartroom) ends in `Buried` on the 11th move. Walking straight out wins with 5 moves to spare. Checking the inventory during the escape costs nothing.
 
 ## Phase 4 — Rooms
 

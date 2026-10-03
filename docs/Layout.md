@@ -153,14 +153,14 @@ A knot of identical, rough-cut passages, about 4 passages with 2–3 exits each.
 
 ## The collapse
 
-Taking the Heartstone sets `$collapse` to 0. Each passage visited afterwards adds 1, and the value is shown with `(meter:)`. `(forget-undos:)` runs at the moment of taking it, so the player can't undo past the theft.
+Taking the Heartstone starts the collapse. Each passage visited afterwards costs one of `$moves_left`, shown with `(meter:)`. Undo is disabled for the rest of the game. The Inventory and the final ladder climb (Escape) are free. Implemented in phase 3; see [collapse.tw](../src/story/collapse.tw).
 
 | Route out (moves from Heart Chamber to the ladder) | Moves |
 |---|---|
-| Shortcut, perfect maze | 7 — Maze ×2, Weighing, Cistern, Wine Cellar, Entrance, Escape |
-| Long route via Crawlway | 11, and blocked anyway by the cave-in |
+| Shortcut, perfect maze | 6 — Maze ×2, Weighing, Cistern, Wine Cellar, Entrance (Escape is free) |
+| Long route via Crawlway | 10, and blocked anyway by the cave-in |
 
-- **Proposed budget: 10 moves.** That allows about 3 wrong turns in the maze or detours. Tune this during playtesting.
+- **Budget: 10 moves** (`$collapse_budget`). That allows about 4 wrong turns in the maze or detours. Tune this during playtesting. Note that the long route fits exactly within 10, so the cave-in is what actually blocks it.
 - **Escalating text:** at fixed thresholds, add prose such as dust falling, cracking beams, and rubble. Reuse `$panic_msgs` where it fits.
 - **Failure:** reaching the budget goes to a **Buried** ending passage with a restart link (or load from the chalk-mark save).
 

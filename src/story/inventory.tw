@@ -1,4 +1,6 @@
-:: Inventory [noInvLink noInvDisplay] {"position":"400,0","size":"100,100"}
+:: Inventory [noInvLink noInvDisplay noTick] {"position":"400,0","size":"100,100"}
+<!-- The Return link is a new passage visit; make it free so checking your bag never costs a move. -->\
+(set: $free_return to true)\
 (set: _items to ($carried:))\
 (if: _items's length is 0)[You are carrying nothing.]\
 (else:)[You are carrying:\

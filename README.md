@@ -2,7 +2,7 @@
 
 A short puzzle adventure in the cellar under an abandoned house. Find the Heartstone, a living crystal at the heart of the cellar, and escape before the cellar collapses without it.
 
-It is mainly an example game: each room demonstrates a Twine/Harlowe mechanic, and the source is commented as a reference. See [docs/Layout.md](docs/Layout.md) for the map and puzzle design, and [IMPLEMENTATION_PLAN.md](IMPLEMENTATION_PLAN.md) for how it was built and what was learned.
+It is mainly an example game: each room demonstrates a Twine/Harlowe mechanic, and the source is commented as a reference. See [docs/Layout.md](docs/Layout.md) for the map and puzzle design, and [docs/Harlowe-Notes.md](docs/Harlowe-Notes.md) for Harlowe quirks found while building it.
 
 Harlowe 3.3.9 (vendored in `storyformats/`)\
 Built with [Tweego](https://www.motoslave.net/tweego/) via [Spindle](https://github.com/brisberg/spindle): `npm run build` → `output/cellar-crawl.html`

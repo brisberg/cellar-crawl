@@ -1,6 +1,6 @@
 # Testing a Twine / Harlowe Game
 
-This doc covers how Dark Cellar is tested, why it is set up this way, and what to add next. It is written for anyone adding rooms or mechanics, including AI agents working from [IMPLEMENTATION_PLAN.md](../IMPLEMENTATION_PLAN.md).
+This doc covers how Dark Cellar is tested, why it is set up this way, and what to add next. It is written for anyone adding rooms or mechanics, including AI agents.
 
 ## Quick start
 

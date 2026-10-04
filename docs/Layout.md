@@ -1,6 +1,6 @@
 # Dark Cellar — Room Layout
 
-Layout for the expanded game: 10 rooms, 5 puzzles, and a timed escape once the Heartstone is taken. Built in phase 4; notes marked **Built:** record decisions made during implementation. See [IMPLEMENTATION_PLAN.md](../IMPLEMENTATION_PLAN.md) for the build order and the systems these rooms depend on.
+Layout for the expanded game: 10 rooms, 5 puzzles, and a timed escape once the Heartstone is taken. Built in phase 4; notes marked **Built:** record decisions made during implementation. See [Harlowe-Notes.md](Harlowe-Notes.md) for Harlowe quirks found during the build.
 
 ## Design goals
 
@@ -168,7 +168,7 @@ Taking the Heartstone starts the collapse. Each passage visited afterwards costs
 | Long route via Crawlway | 10, and blocked anyway by the cave-in |
 
 - **Built:** kept at 10. Tests pin the difficulty: the worst single mistake survives, two mistakes bury you.
-- **Budget: 10 moves** (`$collapse_budget`). That allows about 4 wrong turns in the maze or detours. Tune this during playtesting. Note that the long route fits exactly within 10, so the cave-in is what actually blocks it.
+- **Budget: 10 moves** (`$collapse_budget`). That allows about 4 wrong turns in the maze or detours. Playtested and kept at 10. Note that the long route fits exactly within 10, so the cave-in is what actually blocks it.
 - **Escalating text:** at fixed thresholds, add prose such as dust falling, cracking beams, and rubble. Reuse `$panic_msgs` where it fits.
 - **Failure:** reaching the budget goes to a **Buried** ending passage with a restart link (or load from the chalk-mark save).
 
